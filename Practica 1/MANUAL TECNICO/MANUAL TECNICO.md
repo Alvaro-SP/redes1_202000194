@@ -133,22 +133,31 @@ Para demostrar la comunicación entre las áreas se realizó un ping desde las s
 - Ping de la VPC de Gerencia hacia la VPC Oficina A1:
 ![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/1.png)
 
-- Ping de la VPC de Oficina C1 hacia la VPC Atencion al cliente 1:
+- Ping de la VPC de Oficina C1 hacia la VPC Atencion al cliente 1: (vun25_0)
 ![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/2.png)
 
-- Ping de la VPC de Oficina A2 hacia la VPC Oficina C1:
+- Ping de la VPC de Oficina A2 hacia la VPC Oficina C1: (vun20_0)
 ![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/3.png)
 
  " En todos casos, se recibió una respuesta positiva. "
 
+Para verificar la comunicacion se escucho en Wireshark y se tomaron los paquetes que se recibian al hacer ping:
 
+- Wireshark con filtro ICMP de la VPC de Gerencia hacia la VPC Oficina A1:
+![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/WR1.png)
+
+- Wireshark con filtro ICMP Ping de la VPC de Oficina C1 hacia la VPC Atencion al cliente 1: (vun25_0)
+![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/WR2.png)
+
+- Wireshark con filtro ICMP Ping de la VPC de Oficina A2 hacia la VPC Oficina C1: (vun20_0)
+![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/WR3.png)
 
 
 ## Captura de un paquete ARP
 
-Se capturó un paquete ARP utilizando la herramienta de captura de PnetLab. A continuación se muestra una captura de pantalla del paquete ARP capturado:
+Se capturó un paquete ARP utilizando la herramienta Wireshark. A continuación se muestra una captura de pantalla del paquete ARP capturado:
 
-![Captura de Pantalla del Paquete ARP](captura_arp.png)
+![Captura de Pantalla del Paquete ARP](assets/ARP1.png)
 
 ##  Conclusiones
 
