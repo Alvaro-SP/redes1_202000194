@@ -24,7 +24,7 @@
 
 ---
 
-<center> <h1>PRACTICA #1</h1> </center>
+<center> <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=35&pause=1000&color=2BF715&width=435&lines=PRACTICA+%231" alt="Typing SVG" /></a> </center>
 <!-- <center> <h1>CALCULADORA</h1> </center> -->
 
 
@@ -85,15 +85,54 @@
 | ------ | ------ |
 | Introducción | [Ir](#intro) |
 | Información del sistema | [Ir](#inf) |
-| Objetivos y alcances del sistema| [Ir](#ob) |
-| Información del Sistema requerido | [Ir](#sis) |
-| Sistema Operativo | [Ir](#sis) |
-| Tecnologías utilizadas | [Ir](#tech) |
+| Capturas de pantalla de Wireshark| [Ir](#ob) |
+| Configuracion de VPC's | [Ir](#tech) |
 | Interfaz del programa | [Ir](#inter) |
 | Conclusiones | [Ir](#Conclu) |
 ## <a name="intro" ></a>INTRODUCCIÓN
 Este informe tiene como objetivo demostrar la configuración de las VPCs en un ambiente de prueba utilizando PnetLab. Se explicará cómo se configuró cada una de las VPCs y cómo se estableció la comunicación entre ellas. También se demostrará cómo capturar un paquete ARP y se discutirán los objetivos y conclusiones de la prueba.
 # Reporte de Configuración de VPCs y Comunicación entre Áreas
+## Pings entre los hosts
+
+Para demostrar la comunicación entre las áreas se realizó un ping desde las siguentes VPC's:
+
+- Ping de la VPC de Gerencia hacia la VPC Oficina A1:
+![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/1.png)
+
+- Ping de la VPC de Oficina C1 hacia la VPC Atencion al cliente 1: (vun25_0)
+![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/2.png)
+
+- Ping de la VPC de Oficina A2 hacia la VPC Oficina C1: (vun20_0)
+![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/3.png)
+
+ " En todos casos, se recibió una respuesta positiva. "
+## Captura de un paquete ARP - ICMP
+
+Se capturó un paquete ARP e ICMP utilizando la herramienta Wireshark. A continuación se muestra una captura de pantalla del paquete ARP capturados:
+
+Para verificar la comunicacion se escucho en Wireshark y se tomaron los paquetes que se recibian al hacer ping:
+
+- VPC de Gerencia hacia la VPC Oficina A1:
+![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/t1.png)
+
+- VPC de Oficina C1 hacia la VPC Atencion al cliente 1: (vun25_0)
+![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/t2.png)
+
+- VPC de Oficina A2 hacia la VPC Oficina C1: (vun20_0)
+![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/t3.png)
+
+
+## Captura de un paquete ICMP filtrado
+
+- Wireshark con filtro ICMP de la VPC de Gerencia hacia la VPC Oficina A1:
+![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/WR1.png)
+
+- Wireshark con filtro ICMP Ping de la VPC de Oficina C1 hacia la VPC Atencion al cliente 1: (vun25_0)
+![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/WR2.png)
+
+- Wireshark con filtro ICMP Ping de la VPC de Oficina A2 hacia la VPC Oficina C1: (vun20_0)
+![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/WR3.png)
+
 
 
 
@@ -126,38 +165,8 @@ Para esta prueba se crearon un total de siete áreas, cada una de ellas con sus 
 
 Cada VPC fue configurada con una máscara de subred de 255.255.255.0 y se conectó a un switch virtual.
 
-## Pings entre los hosts
-
-Para demostrar la comunicación entre las áreas se realizó un ping desde las siguentes VPC's:
-
-- Ping de la VPC de Gerencia hacia la VPC Oficina A1:
-![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/1.png)
-
-- Ping de la VPC de Oficina C1 hacia la VPC Atencion al cliente 1: (vun25_0)
-![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/2.png)
-
-- Ping de la VPC de Oficina A2 hacia la VPC Oficina C1: (vun20_0)
-![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/3.png)
-
- " En todos casos, se recibió una respuesta positiva. "
-
-Para verificar la comunicacion se escucho en Wireshark y se tomaron los paquetes que se recibian al hacer ping:
-
-- Wireshark con filtro ICMP de la VPC de Gerencia hacia la VPC Oficina A1:
-![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/WR1.png)
-
-- Wireshark con filtro ICMP Ping de la VPC de Oficina C1 hacia la VPC Atencion al cliente 1: (vun25_0)
-![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/WR2.png)
-
-- Wireshark con filtro ICMP Ping de la VPC de Oficina A2 hacia la VPC Oficina C1: (vun20_0)
-![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/WR3.png)
-
-
-## Captura de un paquete ARP
-
-Se capturó un paquete ARP utilizando la herramienta Wireshark. A continuación se muestra una captura de pantalla del paquete ARP capturado:
-
-![Captura de Pantalla del Paquete ARP](assets/ARP1.png)
+## Interfaz de la Red
+![Captura de pantalla principal](assets/pantalla.png)
 
 ##  Conclusiones
 
