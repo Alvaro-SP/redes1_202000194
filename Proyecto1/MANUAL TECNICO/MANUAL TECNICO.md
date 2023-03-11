@@ -180,3 +180,399 @@ El objetivo de esta prueba fue demostrar la capacidad de PnetLab para simular un
 
 ## Anexos
 
+### CONFIGURACIONES DE LOS HOSTS
+```
+    vlan 14
+    name PLANEACION
+
+    vlan 24
+    name FINANZAS
+
+    vlan 34
+    name RRHH
+
+    vlan 44
+    name IT
+```
+
+1. Server_Finanzas
+ip 192.168.24.3
+save
+2. Server_Planeacion
+ip 192.168.14.3
+save
+3. Server_RRHH
+ip 192.168.34.3
+save
+4. Server_IT
+ip 192.168.44.3
+save
+5. ESW1
+```BASH
+enable
+configure terminal
+host ESW1
+vlan 14
+name PLANEACION
+vlan 24
+name FINANZAS
+vlan 34
+name RRHH
+vlan 44
+name IT
+interface ethernet 0/3
+switchport mode acces
+switchport acces vlan 14
+
+interface ethernet 0/1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 0/2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+do write
+```
+6. ESW2
+```BASH
+enable
+configure terminal
+host ESW2
+vlan 14
+name PLANEACION
+vlan 24
+name FINANZAS
+vlan 34
+name RRHH
+vlan 44
+name IT
+interface ethernet 0/1
+switchport mode acces
+switchport acces vlan 24
+
+interface ethernet 0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 0/2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+do write
+```
+7. ESW3
+```BASH
+enable
+configure terminal
+host ESW3
+vlan 14
+name PLANEACION
+vlan 24
+name FINANZAS
+vlan 34
+name RRHH
+vlan 44
+name IT
+interface ethernet 0/1
+switchport mode acces
+switchport acces vlan 34
+
+interface ethernet 0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+do write
+```
+8. ESW4
+```BASH
+enable
+configure terminal
+host ESW4
+vlan 14
+name PLANEACION
+vlan 24
+name FINANZAS
+vlan 34
+name RRHH
+vlan 44
+name IT
+interface ethernet 0/0
+switchport mode acces
+switchport acces vlan 34
+
+interface ethernet 0/1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+do write
+```
+9. ESW5
+```BASH
+enable
+configure terminal
+host ESW5
+vlan 14
+name PLANEACION
+vlan 24
+name FINANZAS
+vlan 34
+name RRHH
+vlan 44
+name IT
+interface ethernet 0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 0/1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 0/2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+do write
+```
+10. ESW6
+```BASH
+enable
+configure terminal
+host ESW6
+vlan 14
+name PLANEACION
+vlan 24
+name FINANZAS
+vlan 34
+name RRHH
+vlan 44
+name IT
+!  --------- Configuracion de MODOS TRUNCALES
+interface ethernet 0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 0/1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+configure terminal
+
+!  --------- Configuracion de VTP SERVER
+vtp version 2
+vtp mode server
+vtp domain 202000194
+vtp password usac
+
+do write
+```
+11. ESW7
+```BASH
+enable
+configure terminal
+host ESW7
+vlan 14
+name PLANEACION
+vlan 24
+name FINANZAS
+vlan 34
+name RRHH
+vlan 44
+name IT
+interface ethernet 0/2
+switchport mode acces
+switchport acces vlan 44
+
+interface ethernet 0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 0/1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+do write
+```
+12. ESW8
+```BASH
+enable
+configure terminal
+host ESW8
+vlan 14
+name PLANEACION
+vlan 24
+name FINANZAS
+vlan 34
+name RRHH
+vlan 44
+name IT
+interface ethernet 0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 0/1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 0/2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+do write
+```
+13. ESW11
+```BASH
+enable
+configure terminal
+host ESW11
+vlan 14
+name PLANEACION
+vlan 24
+name FINANZAS
+vlan 34
+name RRHH
+vlan 44
+name IT
+interface ethernet 1/0
+switchport mode acces
+switchport acces vlan 34
+
+interface ethernet 0/3
+switchport mode acces
+switchport acces vlan 34
+
+interface ethernet 0/2
+switchport mode acces
+switchport acces vlan 24
+
+interface ethernet 0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 0/1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+do write
+```
+14. ESW9
+```BASH
+enable
+configure terminal
+host ESW9
+vlan 14
+name PLANEACION
+vlan 24
+name FINANZAS
+vlan 34
+name RRHH
+vlan 44
+name IT
+interface ethernet 1/0
+switchport mode acces
+switchport acces vlan 14
+
+interface ethernet 0/3
+switchport mode acces
+switchport acces vlan 44
+
+interface ethernet 0/2
+switchport mode acces
+switchport acces vlan 24
+
+interface ethernet 0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 0/1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+do write
+```
+
+15. ESW10
+
+```BASH
+enable
+configure terminal
+host ESW10
+vlan 14
+name PLANEACION
+vlan 24
+name FINANZAS
+vlan 34
+name RRHH
+vlan 44
+name IT
+interface ethernet 0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 0/1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 0/2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+do write
+```
+
+16. IT_2
+
+```BASH
+ip 192.168.44.2
+save
+```
+
+17. Planeacion_1
+
+```BASH
+ip 192.168.14.1
+save
+```
+
+18. IT_1
+
+```BASH
+ip 192.168.44.1
+save
+```
+
+19. Finanzas_2
+
+```BASH
+ip 192.168.24.2
+save
+```
+
+20. Finanzas_1
+
+```BASH
+ip 192.168.24.1
+save
+```
+
+21. RRHH_1
+
+```BASH
+ip 192.168.34.1
+save
+```
+
+22. RRHH_2
+
+```BASH
+ip 192.168.34.2
+save
+```
+
+
+
+<!-- esto va en los switch clientes osea todos los demas -->
+configure terminal
+vtp mode client
+vtp domain dominio
+vtp password contrasena
+do write
+
+
+do show run
