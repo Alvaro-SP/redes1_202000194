@@ -23,8 +23,10 @@
 
 
 ---
+<div align="center">
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=35&pause=1000&color=2BF715&width=435&lines=PRACTICA+%232" alt="Typing SVG" /></a>
+</div>
 
-<center> <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=35&pause=1000&color=2BF715&width=435&lines=PRACTICA+%232" alt="Typing SVG" /></a> </center>
 <!-- <center> <h1>CALCULADORA</h1> </center> -->
 
 
@@ -128,8 +130,29 @@ Cada VPC fue configurada con una máscara de subred de 255.255.255.0 y se conect
 ## Interfaz de la Red
 ![Captura de pantalla principal](assets/pantalla.png)
 
-# 3 Pings entre los hosts
+# 3 Detalle de los comandods usados
+- enable - ingresa al modo privilegiado
 
+- configure terminal - ingresa al modo de configuración global
+- host ESW5 - establece el nombre de host en ESW5
+- vtp mode client - establece el modo VTP como cliente
+- vtp domain 202000194 - establece el dominio VTP en 202000194
+- vtp password usac - establece la contraseña VTP como usac
+- interface ethernet 0/0 - ingresa al modo de configuración de interfaz para Ethernet 0/0
+- switchport trunk encapsulation dot1q - establece la encapsulación como dot1q para trunking
+- switchport mode trunk - establece el modo como trunking
+- interface ethernet 0/1 - ingresa al modo de configuración de interfaz para Ethernet 0/1
+- interface ethernet 0/2 - ingresa al modo de configuración de interfaz para Ethernet 0/2
+- spanning-tree mode rapid-pvst - establece el modo STP como Rapid PVST
+- spanning-tree vlan 14,24,34,44 root primary - establece la prioridad de raíz para las VLAN 14, 24, 34 y 44
+
+
+
+- vtp version 2 - establece la versión de VTP como 2
+- vtp mode server - establece el modo VTP como - servidor
+- vtp domain 202000194 - establece el dominio VTP  en 202000194
+- vtp password usac  establece la contraseña VTP - como usac
+- spanning-tree mode rapid-pvst  establece el  modo STP como Rapid PVST
 # 4 Pings entre los hosts
 
 Para demostrar la comunicación entre las áreas se realizó un ping desde las siguentes VPC's:
