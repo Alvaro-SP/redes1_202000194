@@ -119,6 +119,14 @@ Para esta prueba se crearon un total de siete áreas, cada una de ellas con sus 
 | RRHH_1           | 192.168.34.1   |
 | RRHH_2           | 192.168.34.2   |
 
+### VLANS
+
+| VLAN ID | Name       |
+| ------- | ---------- |
+| 14      | PLANEACION |
+| 24      | FINANZAS   |
+| 34      | RRHH       |
+| 44      | IT         |
 
 Cada VPC fue configurada con una máscara de subred de 255.255.255.0 y se conectó a varios switches.
 | Protocol      | Switch Name     |
@@ -157,30 +165,26 @@ Cada VPC fue configurada con una máscara de subred de 255.255.255.0 y se conect
 
 Para demostrar la comunicación entre las áreas se realizó un ping desde las siguentes VPC's:
 
-- Ping de la VPC de Gerencia hacia la VPC Oficina A1:
+- Ping de la VPC de Finanzas1 hacia la VPC Finanzas2: tomando la captura en el switch ESW9
+ en el puerto 0/0
 ![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/1.png)
 
-- Ping de la VPC de Oficina C1 hacia la VPC Atencion al cliente 1: (vun25_0)
+![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/icmp1.png)
+
+- Ping de la VPC de IT_1 hacia la VPC IT_2: CAPTURANDO en el switch ESW10 en su puerto 0/0
+
 ![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/2.png)
 
+![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/icmp2.png)
+
  " En todos casos, se recibió una respuesta positiva. "
-## Captura de un paquete ARP - ICMP
-
-Se capturó un paquete ARP e ICMP utilizando la herramienta Wireshark. A continuación se muestra una captura de pantalla del paquete ARP capturados:
-
-Para verificar la comunicacion se escucho en Wireshark y se tomaron los paquetes que se recibian al hacer ping:
-
-- VPC de Gerencia hacia la VPC Oficina A1:
-![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/t1.png)
-
-- VPC de Oficina C1 hacia la VPC Atencion al cliente 1: (vun25_0)
-![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/t2.png)
-
 
 
 ##  Conclusiones
 
-El objetivo de esta prueba fue demostrar la capacidad de PnetLab para simular una red de área local (LAN) y permitir la configuración de las VPCs y la comunicación entre ellas. Se logró demostrar que las VPCs podían comunicarse entre sí y que era posible capturar paquetes ARP utilizando PnetLab. Como resultado, se concluye que PnetLab es una herramienta útil para la configuración y prueba de redes de área local.
+El objetivo de esta prueba fue demostrar la capacidad de PnetLab para simular una red de área local (LAN) y permitir la configuración de las VPCs y la comunicación entre ellas. Se logró demostrar que las VPCs podían comunicarse entre sí y que era posible capturar paquetes  VTP y STP siendo dos protocolos importantes en la configuración de redes de computadoras, y que ambos son útiles para diferentes propósitos. VTP se utiliza para simplificar la administración de VLAN en redes grandes, mientras que STP se utiliza para evitar bucles de red y garantizar la redundancia en la topología de la red. Es importante configurar correctamente ambos protocolos para garantizar un funcionamiento adecuado de la red y evitar problemas de conectividad y seguridad. 
+
+utilizando PnetLab. Como resultado, se concluye que PnetLab es una herramienta útil para la configuración y prueba de redes de área local.
 
 
 
@@ -252,7 +256,7 @@ switchport mode trunk
 interface ethernet 0/2
 switchport trunk encapsulation dot1q
 switchport mode trunk
-
+exit
 !  --------- Configuracion de STP SWITCH RAIZ
 spanning-tree mode rapid-pvst
 
@@ -280,6 +284,7 @@ switchport mode trunk
 interface ethernet 0/2
 switchport trunk encapsulation dot1q
 switchport mode trunk
+exit
 !  --------- Configuracion de STP SWITCH RAIZ
 spanning-tree mode rapid-pvst
 
@@ -303,6 +308,7 @@ switchport acces vlan 34
 interface ethernet 0/0
 switchport trunk encapsulation dot1q
 switchport mode trunk
+exit
 !  --------- Configuracion de STP SWITCH RAIZ
 spanning-tree mode rapid-pvst
 
@@ -321,12 +327,12 @@ vtp password usac
 
 interface ethernet 0/0
 switchport mode acces
-switchport acces vlan 34
+switchport acces vlan 44
 
 interface ethernet 0/1
 switchport trunk encapsulation dot1q
 switchport mode trunk
-
+exit
 !  --------- Configuracion de STP SWITCH RAIZ
 spanning-tree mode rapid-pvst
 
@@ -354,7 +360,7 @@ switchport mode trunk
 interface ethernet 0/2
 switchport trunk encapsulation dot1q
 switchport mode trunk
-
+exit
 !  --------- Configuracion de STP SWITCH RAIZ
 spanning-tree mode rapid-pvst
 spanning-tree vlan 14,24,34,44 root primary
@@ -385,7 +391,7 @@ interface ethernet 0/1
 switchport trunk encapsulation dot1q
 switchport mode trunk
 configure terminal
-
+exit
 !  --------- Configuracion de VTP SERVER
 vtp version 2
 vtp mode server
@@ -411,6 +417,7 @@ vlan 34
 name RRHH
 vlan 44
 name IT
+exit
 interface ethernet 0/2
 switchport mode acces
 switchport acces vlan 44
@@ -422,6 +429,7 @@ switchport mode trunk
 interface ethernet 0/1
 switchport trunk encapsulation dot1q
 switchport mode trunk
+exit
 !  --------- Configuracion de MODO TRANSPARENTE
 vtp mode transparent
 vtp domain 202000194
@@ -454,6 +462,7 @@ switchport mode trunk
 interface ethernet 0/2
 switchport trunk encapsulation dot1q
 switchport mode trunk
+exit
 !  --------- Configuracion de STP SWITCH RAIZ
 spanning-tree mode rapid-pvst
 
@@ -489,6 +498,7 @@ switchport mode trunk
 interface ethernet 0/1
 switchport trunk encapsulation dot1q
 switchport mode trunk
+exit
 !  --------- Configuracion de STP SWITCH RAIZ
 spanning-tree mode rapid-pvst
 
@@ -524,6 +534,7 @@ switchport mode trunk
 interface ethernet 0/1
 switchport trunk encapsulation dot1q
 switchport mode trunk
+exit
 !  --------- Configuracion de STP SWITCH RAIZ
 spanning-tree mode rapid-pvst
 
@@ -553,7 +564,7 @@ switchport mode trunk
 interface ethernet 0/2
 switchport trunk encapsulation dot1q
 switchport mode trunk
-
+exit
 !  --------- Configuracion de VTP CLIENTE
 vtp mode client
 vtp domain 202000194
