@@ -24,7 +24,7 @@
 
 ---
 
-<center> <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=35&pause=1000&color=2BF715&width=435&lines=PRACTICA+%231" alt="Typing SVG" /></a> </center>
+<center> <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=35&pause=1000&color=2BF715&width=435&lines=PRACTICA+%232" alt="Typing SVG" /></a> </center>
 <!-- <center> <h1>CALCULADORA</h1> </center> -->
 
 
@@ -90,9 +90,47 @@
 | Interfaz del programa | [Ir](#inter) |
 | Conclusiones | [Ir](#Conclu) |
 ## <a name="intro" ></a>INTRODUCCIÓN
-Este informe tiene como objetivo demostrar la configuración de las VPCs en un ambiente de prueba utilizando PnetLab. Se explicará cómo se configuró cada una de las VPCs y cómo se estableció la comunicación entre ellas. También se demostrará cómo capturar un paquete ARP y se discutirán los objetivos y conclusiones de la prueba.
-# Reporte de Configuración de VPCs y Comunicación entre Áreas
-## Pings entre los hosts
+Este laboratorio se ha desarrollado utilizando Pnet Lab y se ha diseñado con cuatro VLAN para diferentes departamentos: VLAN 14 para PLANEACION, VLAN 24 para FINANZAS, VLAN 34 para RRHH y VLAN 44 para IT. Cada VLAN ha sido nombrada según el departamento correspondiente para una identificación y gestión más fácil.
+
+El departamento de IT tiene servidores, un backbone y un área de trabajo que se han segregado en la VLAN 44 para una mejor seguridad y gestión. El backbone se utiliza para conectar las diferentes VLAN y proporciona una conexión de alta velocidad para la transferencia de datos entre los diferentes departamentos.
+
+Pnet Lab es una plataforma ideal para construir y probar redes, y el uso de VLAN en este laboratorio ha ayudado a crear una infraestructura de red segura y eficiente. La segregación de los departamentos en diferentes VLAN asegura que no haya interferencia entre ellos, y el uso de un backbone ayuda a garantizar que haya una conexión rápida y confiable entre ellos.
+
+En general, este laboratorio es un excelente ejemplo de cómo las VLAN se pueden utilizar para crear una infraestructura de red segura y eficiente, y el uso de Pnet Lab facilita la gestión y el mantenimiento de esta infraestructura.
+# 1 Resumen de direcciones IP y VLAN
+
+## Configuración de las VPCs
+
+Para esta prueba se crearon un total de siete áreas, cada una de ellas con sus propias VPC. La configuración de las VPCs incluyó la asignación de direcciones IP y la configuración de las interfaces de red. A continuación se muestra una lista de las direcciones IP asignadas a cada VPC:
+
+| Server Name      | IP Address     |
+|:------------------|:----------------:|
+| Server_Finanzas  | 192.168.24.3   |
+| Server_Planeacion| 192.168.14.3   |
+| Server_RRHH      | 192.168.34.3   |
+| Server_IT        | 192.168.44.3   |
+| IT_2             | 192.168.44.2   |
+| Planeacion_1     | 192.168.14.1   |
+| IT_1             | 192.168.44.1   |
+| Finanzas_2       | 192.168.24.2   |
+| Finanzas_1       | 192.168.24.1   |
+| RRHH_1           | 192.168.34.1   |
+| RRHH_2           | 192.168.34.2   |
+
+
+Cada VPC fue configurada con una máscara de subred de 255.255.255.0 y se conectó a varios switches.
+| Protocol      | Switch Name     |
+|:------------------|:----------------:|
+| VTP raiz  | ESW6   |
+| STP raiz| ESW5   |
+# 2 Captura de la implementacion de las topologias
+
+## Interfaz de la Red
+![Captura de pantalla principal](assets/pantalla.png)
+
+# 3 Pings entre los hosts
+
+# 4 Pings entre los hosts
 
 Para demostrar la comunicación entre las áreas se realizó un ping desde las siguentes VPC's:
 
@@ -101,9 +139,6 @@ Para demostrar la comunicación entre las áreas se realizó un ping desde las s
 
 - Ping de la VPC de Oficina C1 hacia la VPC Atencion al cliente 1: (vun25_0)
 ![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/2.png)
-
-- Ping de la VPC de Oficina A2 hacia la VPC Oficina C1: (vun20_0)
-![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/3.png)
 
  " En todos casos, se recibió una respuesta positiva. "
 ## Captura de un paquete ARP - ICMP
@@ -118,55 +153,7 @@ Para verificar la comunicacion se escucho en Wireshark y se tomaron los paquetes
 - VPC de Oficina C1 hacia la VPC Atencion al cliente 1: (vun25_0)
 ![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/t2.png)
 
-- VPC de Oficina A2 hacia la VPC Oficina C1: (vun20_0)
-![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/t3.png)
 
-
-## Captura de un paquete ICMP filtrado
-
-- Wireshark con filtro ICMP de la VPC de Gerencia hacia la VPC Oficina A1:
-![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/WR1.png)
-
-- Wireshark con filtro ICMP Ping de la VPC de Oficina C1 hacia la VPC Atencion al cliente 1: (vun25_0)
-![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/WR2.png)
-
-- Wireshark con filtro ICMP Ping de la VPC de Oficina A2 hacia la VPC Oficina C1: (vun20_0)
-![Captura de Pantalla del Paquete Gerencia hacia la VPC Oficina A1](assets/WR3.png)
-
-
-
-
-## Configuración de las VPCs
-
-Para esta prueba se crearon un total de siete áreas, cada una de ellas con sus propias VPC. La configuración de las VPCs incluyó la asignación de direcciones IP y la configuración de las interfaces de red. A continuación se muestra una lista de las direcciones IP asignadas a cada VPC:
-
-| Dirección IP    | Nombre de host  |
-|:----------------:|:----------------:|
-| 192.168.94.3    | recepcion      |
-| 192.168.94.4    | gerencia       |
-| 192.168.94.5    | atencion1      |
-| 192.168.94.6    | atencion2      |
-| 192.168.94.7    | oficina 1      |
-| 192.168.94.8    | oficina 2      |
-| 192.168.94.9    | oficina 3      |
-| 192.168.94.10   | oficina 4      |
-| 192.168.94.11   | oficina 5      |
-| 192.168.94.12   | oficina 6      |
-| 192.168.94.13   | oficina A1     |
-| 192.168.94.14   | oficina A2     |
-| 192.168.94.15   | oficina B1     |
-| 192.168.94.16   | oficina B2     |
-| 192.168.94.17   | oficina B3     |
-| 192.168.94.18   | oficina C1     |
-| 192.168.94.19   | oficina C2     |
-| 192.168.94.20   | oficina C3     |
-| 192.168.94.21   | oficina C4     |
-| 192.168.94.22   | oficina C5     |
-
-Cada VPC fue configurada con una máscara de subred de 255.255.255.0 y se conectó a un switch virtual.
-
-## Interfaz de la Red
-![Captura de pantalla principal](assets/pantalla.png)
 
 ##  Conclusiones
 
@@ -196,30 +183,37 @@ El objetivo de esta prueba fue demostrar la capacidad de PnetLab para simular un
 ```
 
 1. Server_Finanzas
+```
 ip 192.168.24.3
 save
+```
+
 2. Server_Planeacion
+```
 ip 192.168.14.3
 save
+```
 3. Server_RRHH
+```
 ip 192.168.34.3
 save
+```
 4. Server_IT
+```
 ip 192.168.44.3
 save
+```
 5. ESW1
 ```BASH
 enable
 configure terminal
 host ESW1
-vlan 14
-name PLANEACION
-vlan 24
-name FINANZAS
-vlan 34
-name RRHH
-vlan 44
-name IT
+
+!  --------- Configuracion de VTP CLIENTE
+vtp mode client
+vtp domain 202000194
+vtp password usac
+
 interface ethernet 0/3
 switchport mode acces
 switchport acces vlan 14
@@ -235,6 +229,10 @@ switchport mode trunk
 interface ethernet 0/2
 switchport trunk encapsulation dot1q
 switchport mode trunk
+
+!  --------- Configuracion de STP SWITCH RAIZ
+spanning-tree mode rapid-pvst
+
 do write
 ```
 6. ESW2
@@ -242,14 +240,12 @@ do write
 enable
 configure terminal
 host ESW2
-vlan 14
-name PLANEACION
-vlan 24
-name FINANZAS
-vlan 34
-name RRHH
-vlan 44
-name IT
+
+!  --------- Configuracion de VTP CLIENTE
+vtp mode client
+vtp domain 202000194
+vtp password usac
+
 interface ethernet 0/1
 switchport mode acces
 switchport acces vlan 24
@@ -261,6 +257,9 @@ switchport mode trunk
 interface ethernet 0/2
 switchport trunk encapsulation dot1q
 switchport mode trunk
+!  --------- Configuracion de STP SWITCH RAIZ
+spanning-tree mode rapid-pvst
+
 do write
 ```
 7. ESW3
@@ -268,14 +267,12 @@ do write
 enable
 configure terminal
 host ESW3
-vlan 14
-name PLANEACION
-vlan 24
-name FINANZAS
-vlan 34
-name RRHH
-vlan 44
-name IT
+
+!  --------- Configuracion de VTP CLIENTE
+vtp mode client
+vtp domain 202000194
+vtp password usac
+
 interface ethernet 0/1
 switchport mode acces
 switchport acces vlan 34
@@ -283,6 +280,8 @@ switchport acces vlan 34
 interface ethernet 0/0
 switchport trunk encapsulation dot1q
 switchport mode trunk
+!  --------- Configuracion de STP SWITCH RAIZ
+spanning-tree mode rapid-pvst
 
 do write
 ```
@@ -291,14 +290,12 @@ do write
 enable
 configure terminal
 host ESW4
-vlan 14
-name PLANEACION
-vlan 24
-name FINANZAS
-vlan 34
-name RRHH
-vlan 44
-name IT
+
+!  --------- Configuracion de VTP CLIENTE
+vtp mode client
+vtp domain 202000194
+vtp password usac
+
 interface ethernet 0/0
 switchport mode acces
 switchport acces vlan 34
@@ -307,21 +304,22 @@ interface ethernet 0/1
 switchport trunk encapsulation dot1q
 switchport mode trunk
 
+!  --------- Configuracion de STP SWITCH RAIZ
+spanning-tree mode rapid-pvst
+
 do write
 ```
-9. ESW5
+### 9. ESW5  (STP SWITCH RAIZ)
 ```BASH
 enable
 configure terminal
 host ESW5
-vlan 14
-name PLANEACION
-vlan 24
-name FINANZAS
-vlan 34
-name RRHH
-vlan 44
-name IT
+
+!  --------- Configuracion de VTP CLIENTE
+vtp mode client
+vtp domain 202000194
+vtp password usac
+
 interface ethernet 0/0
 switchport trunk encapsulation dot1q
 switchport mode trunk
@@ -334,13 +332,18 @@ interface ethernet 0/2
 switchport trunk encapsulation dot1q
 switchport mode trunk
 
+!  --------- Configuracion de STP SWITCH RAIZ
+spanning-tree mode rapid-pvst
+spanning-tree vlan 14,24,34,44 root primary
+
 do write
 ```
-10. ESW6
+### 10. ESW6    SWITCH RAIZ VTP
 ```BASH
 enable
 configure terminal
 host ESW6
+! --------- Configuracion de VLAN porque es VTP RAIZ
 vlan 14
 name PLANEACION
 vlan 24
@@ -349,6 +352,7 @@ vlan 34
 name RRHH
 vlan 44
 name IT
+exit
 !  --------- Configuracion de MODOS TRUNCALES
 interface ethernet 0/0
 switchport trunk encapsulation dot1q
@@ -365,6 +369,9 @@ vtp mode server
 vtp domain 202000194
 vtp password usac
 
+!  --------- Configuracion de STP SWITCH RAIZ
+spanning-tree mode rapid-pvst
+
 do write
 ```
 11. ESW7
@@ -372,6 +379,7 @@ do write
 enable
 configure terminal
 host ESW7
+! --------- Configuracion de VLAN porque es transparente
 vlan 14
 name PLANEACION
 vlan 24
@@ -391,6 +399,14 @@ switchport mode trunk
 interface ethernet 0/1
 switchport trunk encapsulation dot1q
 switchport mode trunk
+!  --------- Configuracion de MODO TRANSPARENTE
+vtp mode transparent
+vtp domain 202000194
+vtp password usac
+
+!  --------- Configuracion de STP SWITCH RAIZ
+spanning-tree mode rapid-pvst
+
 do write
 ```
 12. ESW8
@@ -398,14 +414,12 @@ do write
 enable
 configure terminal
 host ESW8
-vlan 14
-name PLANEACION
-vlan 24
-name FINANZAS
-vlan 34
-name RRHH
-vlan 44
-name IT
+
+!  --------- Configuracion de VTP CLIENTE
+vtp mode client
+vtp domain 202000194
+vtp password usac
+
 interface ethernet 0/0
 switchport trunk encapsulation dot1q
 switchport mode trunk
@@ -417,6 +431,9 @@ switchport mode trunk
 interface ethernet 0/2
 switchport trunk encapsulation dot1q
 switchport mode trunk
+!  --------- Configuracion de STP SWITCH RAIZ
+spanning-tree mode rapid-pvst
+
 do write
 ```
 13. ESW11
@@ -424,14 +441,12 @@ do write
 enable
 configure terminal
 host ESW11
-vlan 14
-name PLANEACION
-vlan 24
-name FINANZAS
-vlan 34
-name RRHH
-vlan 44
-name IT
+
+!  --------- Configuracion de VTP CLIENTE
+vtp mode client
+vtp domain 202000194
+vtp password usac
+
 interface ethernet 1/0
 switchport mode acces
 switchport acces vlan 34
@@ -451,6 +466,9 @@ switchport mode trunk
 interface ethernet 0/1
 switchport trunk encapsulation dot1q
 switchport mode trunk
+!  --------- Configuracion de STP SWITCH RAIZ
+spanning-tree mode rapid-pvst
+
 do write
 ```
 14. ESW9
@@ -458,14 +476,12 @@ do write
 enable
 configure terminal
 host ESW9
-vlan 14
-name PLANEACION
-vlan 24
-name FINANZAS
-vlan 34
-name RRHH
-vlan 44
-name IT
+
+!  --------- Configuracion de VTP CLIENTE
+vtp mode client
+vtp domain 202000194
+vtp password usac
+
 interface ethernet 1/0
 switchport mode acces
 switchport acces vlan 14
@@ -485,11 +501,12 @@ switchport mode trunk
 interface ethernet 0/1
 switchport trunk encapsulation dot1q
 switchport mode trunk
+!  --------- Configuracion de STP SWITCH RAIZ
+spanning-tree mode rapid-pvst
+
 do write
 ```
-
-15. ESW10
-
+### 15. ESW10
 ```BASH
 enable
 configure terminal
@@ -513,25 +530,27 @@ switchport mode trunk
 interface ethernet 0/2
 switchport trunk encapsulation dot1q
 switchport mode trunk
+
+!  --------- Configuracion de VTP CLIENTE
+vtp mode client
+vtp domain 202000194
+vtp password usac
+!  --------- Configuracion de STP SWITCH RAIZ
+spanning-tree mode rapid-pvst
+
 do write
 ```
-
 16. IT_2
-
 ```BASH
 ip 192.168.44.2
 save
 ```
-
 17. Planeacion_1
-
 ```BASH
 ip 192.168.14.1
 save
 ```
-
 18. IT_1
-
 ```BASH
 ip 192.168.44.1
 save
@@ -570,8 +589,8 @@ save
 <!-- esto va en los switch clientes osea todos los demas -->
 configure terminal
 vtp mode client
-vtp domain dominio
-vtp password contrasena
+vtp domain 202000194
+vtp password usac
 do write
 
 
