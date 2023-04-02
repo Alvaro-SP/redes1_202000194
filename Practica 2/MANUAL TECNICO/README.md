@@ -287,7 +287,7 @@ save
 ```java
 enable
 configure terminal
-host SW8
+host SW8-
 
 !  --------- Configuracion
 
@@ -408,11 +408,13 @@ ip address 142.168.1.2 255.255.255.248
 no shutdown
 
 interface e0/1
-ip address 142.168.2.2 255.255.255.0
+ip address 142.168.2.2 255.255.255.248
 no shutdown
 
 !configuracion interfaz serial
-
+interface s1/0
+ip address 10.0.0.1 255.255.255.252
+no shutdown
 
 !configuramos las rutas estáticas
 ip route 10.0.0.0 255.255.255.252 10.0.0.2
@@ -444,8 +446,10 @@ interface e0/1
 ip address 142.178.2.1 255.255.255.0
 no shutdown
 
-!Configuracion de s1/0 Serial
-
+!configuracion interfaz serial****************************
+interface s1/0
+ip address 10.0.0.2 255.255.255.252
+no shutdown
 
 !configuramos las rutas estáticas
 ip route 10.0.0.0 255.255.255.252 10.0.0.1
