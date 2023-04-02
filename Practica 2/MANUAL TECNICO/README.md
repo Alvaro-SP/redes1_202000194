@@ -251,14 +251,14 @@ utilizando PnetLab. Como resultado, se concluye que PnetLab es una herramienta �
 ### 1. VPC11
 
 ```C
-ip 142.168.0.4
+ip 142.168.0.4/24 192.168.0.1
 save
 ```
 
 ### 2. VPC12
 
 ```C
-ip 192.178.0.4
+ip 192.178.0.4/24 192.168.0.1
 save
 ```
 ## PORT CHANNEL
@@ -317,14 +317,14 @@ ip address 142.168.0.2 255.255.255.0
 no shutdown
 
 !configuramos las rutas estáticas
-ip route 10.0.0.0 255.255.255.252 142.168.1.1
+ip route 10.0.0.0 255.255.255.252 142.168.1.2
 
-ip route 142.178.1.0 255.255.255.0 142.168.1.1
-ip route 142.178.2.0 255.255.255.0 142.168.1.1
-ip route 142.178.0.0 255.255.255.0 142.168.1.1
+ip route 142.178.1.0 255.255.255.0 142.168.1.2
+ip route 142.178.2.0 255.255.255.0 142.168.1.2
+ip route 142.178.0.0 255.255.255.0 142.168.1.2
 
-ip route 142.168.1.0 255.255.255.0 142.168.1.1
-ip route 142.168.2.0 255.255.255.0 142.168.1.1
+ip route 142.168.1.0 255.255.255.0 142.168.1.2
+ip route 142.168.2.0 255.255.255.0 142.168.1.2
 
 end
 do write
@@ -347,14 +347,14 @@ ip address 142.168.0.3 255.255.255.0
 no shutdown
 
 !configuramos las rutas estáticas
-ip route 10.0.0.0 255.255.255.252 142.168.2.1
+ip route 10.0.0.0 255.255.255.252 142.168.2.2
 
-ip route 142.178.1.0 255.255.255.0 142.168.2.1
-ip route 142.178.2.0 255.255.255.0 142.168.2.1
-ip route 142.178.0.0 255.255.255.0 142.168.2.1
+ip route 142.178.1.0 255.255.255.0 142.168.2.2
+ip route 142.178.2.0 255.255.255.0 142.168.2.2
+ip route 142.178.0.0 255.255.255.0 142.168.2.2
 
-ip route 142.168.1.0 255.255.255.0 142.168.2.1
-ip route 142.168.2.0 255.255.255.0 142.168.2.1
+ip route 142.168.1.0 255.255.255.0 142.168.2.2
+ip route 142.168.2.0 255.255.255.0 142.168.2.2
 end
 do write
 ```
@@ -374,15 +374,19 @@ interface e0/1
 ip address 142.168.2.2 255.255.255.0
 no shutdown
 
-!configuramos las rutas estáticas
-ip route 10.0.0.0 255.255.255.252 10.0.0.1
-ip route 142.178.1.0 255.255.255.0 10.0.0.1
-ip route 142.178.2.0 255.255.255.0 10.0.0.1
-ip route 142.178.0.0 255.255.255.0 10.0.0.1
+!configuracion interfaz serial
 
-ip route 142.168.1.0 255.255.255.0 142.168.1.2
-ip route 142.168.2.0 255.255.255.0 10.0.0.1
-ip route 142.168.0.0 255.255.255.0 142.168.2.2
+
+!configuramos las rutas estáticas
+ip route 10.0.0.0 255.255.255.252 10.0.0.2
+
+ip route 142.178.1.0 255.255.255.0 10.0.0.2
+ip route 142.178.2.0 255.255.255.0 10.0.0.2
+ip route 142.178.0.0 255.255.255.0 10.0.0.2
+
+ip route 142.168.1.0 255.255.255.0 142.168.1.1
+ip route 142.168.2.0 255.255.255.0 142.168.2.1
+ip route 142.168.0.0 255.255.255.0 142.168.1.1
 end
 do write
 ```
@@ -390,23 +394,93 @@ do write
 ### 8. R4
 
 ```java
+enable
+configure terminal
+host R4
 
+!configuramos ROUTERS
+interface e0/0
+ip address 142.178.1.1 255.255.255.248
+no shutdown
+
+interface e0/1
+ip address 142.178.2.1 255.255.255.0
+no shutdown
+
+!Configuracion de s1/0
+
+
+!configuramos las rutas estáticas
+ip route 10.0.0.0 255.255.255.252 10.0.0.1
+
+ip route 142.178.1.0 255.255.255.0 142.178.1.2
+ip route 142.178.2.0 255.255.255.0 142.178.2.2
+ip route 142.178.0.0 255.255.255.0 142.178.1.2
+
+ip route 142.168.1.0 255.255.255.0 10.0.0.1
+ip route 142.168.2.0 255.255.255.0 10.0.0.1
+ip route 142.168.0.0 255.255.255.0 10.0.0.1
+end
+do write
 ```
 ### 9. R5
 
 ```java
+enable
+configure terminal
+host R5
 
+!configuramos ROUTERS
+interface e0/0
+ip address 142.178.1.2 255.255.255.248
+no shutdown
+
+interface e0/1
+ip address 142.178.0.2 255.255.255.0
+no shutdown
+
+!configuramos las rutas estáticas
+ip route 10.0.0.0 255.255.255.252 142.178.1.1
+
+ip route 142.178.1.0 255.255.255.0 142.178.1.1
+ip route 142.178.2.0 255.255.255.0 142.178.1.1
+
+ip route 142.168.0.0 255.255.255.0 142.178.1.1
+ip route 142.168.1.0 255.255.255.0 142.178.1.1
+ip route 142.168.2.0 255.255.255.0 142.178.1.1
+end
+do write
 ```
+
 ### 10. R6
 
 ```java
+enable
+configure terminal
+host R6
 
+!configuramos ROUTERS
+interface e0/0
+ip address 142.178.2.2 255.255.255.248
+no shutdown
+
+interface e0/1
+ip address 142.178.0.3 255.255.255.0
+no shutdown
+
+!configuramos las rutas estáticas
+ip route 10.0.0.0 255.255.255.252 142.178.2.1
+
+ip route 142.178.1.0 255.255.255.0 142.178.2.1
+ip route 142.178.2.0 255.255.255.0 142.178.2.1
+
+ip route 142.168.0.0 255.255.255.0 142.178.2.1
+ip route 142.168.1.0 255.255.255.0 142.178.2.1
+ip route 142.168.2.0 255.255.255.0 142.178.2.1
+end
+do write
 ```
-### 11. R9
 
-```java
-
-```
 ### 12. SW9
 
 ```java
