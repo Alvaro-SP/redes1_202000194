@@ -90,10 +90,86 @@ La interconexión de diferentes ubicaciones es una necesidad en cualquier organi
 ### Creación de ruta estática
 
 ### creación de PortChannel con PAGP y LACP
+- PAGP:
+```
+!  --------- Configuracion
 
+interface Port-channel 1
+description conexion a SW7
+
+interface range e0/0-1
+channel-group 1 mode desirable
+no shutdown
+```
+```
+interface range e0/2-3
+channel-group 1 mode auto
+no shutdown
+```
+- LACP:
+```
+interface Port-channel 2
+description conexion a SW10 con LACP
+exit
+interface range e0/2-3
+channel-group 2 mode active
+end
+```
+```
+interface Port-channel 2
+description conexion a SW9 con LACP
+exit
+interface range e0/1-0
+channel-group 2 mode passive
+```
 ### creación de IP virtual con HSRP y GLBP
+- HSRP:
+```
 
+!usamos la version 2 de HSRP
+standby version 2
+
+!definimos su id de grupo HSRP y la dirección ip virtual del gateway
+standby 21 ip  142.168.0.1
+
+!también le definimos su prioridad
+standby 21 priority 109
+
+!configuramos el preempt, que sirve para que recupere la prioridad una se recupere la comunicación
+standby 21 preempt
+```
+```
+standby version 2
+standby 21 ip 142.168.0.1
+```
+
+- GLBP:
+```
+! CONFIGURACION DE GLBP
+glbp 7 ip 142.178.0.1
+glbp 7 preempt
+glbp 7 priority 150
+glbp 7 load-balancing round-robin
+
+```
+```
+glbp 7 ip 142.178.0.1
+glbp 7 load-balancing round-robin
+```
 ### configuración de VPC.
+###  VPC11
+
+```C
+ip 142.168.0.4/24 192.168.0.1
+save
+```
+
+###  VPC12
+
+```C
+ip 192.178.0.4/24 192.168.0.1
+save
+```
 
 # 3 Comandos empleados para la verificación .
 correcto funcionamiento de los protocolos empleados para la realización de la práctica.
