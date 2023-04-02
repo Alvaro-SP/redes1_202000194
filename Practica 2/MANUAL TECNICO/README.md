@@ -108,6 +108,25 @@ show lacp neighbor
 show etherchannel summary
 show pagp neighbor
 ```
+
+- Verificando la configuración de HSRP SW7 y SW8
+
+```c
+show standby brief
+```
+
+- Verificando la configuración de GLBP SW9 y SW10
+
+```c
+show glbp brief
+```
+
+- verificando la configuración de las rutas de interfaces
+
+```c
+show ip route
+show running-config | section ip route
+```
 <div align="center">
 <table  style="color: black;">
   <tr  style="background-color:red; color: white;">
@@ -229,7 +248,7 @@ show pagp neighbor
 
 
 
-#  Captura de la implementacion de las topologias
+#  Captura de la implementacion de la topologia
 
 ## Interfaz de la Red
 
