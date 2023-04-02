@@ -73,15 +73,15 @@ La interconexión de diferentes ubicaciones es una necesidad en cualquier organi
 # 1 Configuraciónes de: routers, switches y VPCs
 
 ## R1
-ir a la configuracion de [R1](#7-R1)
+[ir a la configuracion de R1](#7.-R1)
 ## R2
-
+[ir a la configuracion de R1](#5.-R2)
 ## R5
-
+[ir a la configuracion de R1](#9.-R5)
 ## SW7
-
+[ir a la configuracion de R1](#4.-SW7)
 ## VPC11
-
+[ir a la configuracion de R1](#1.-VPC11)
 # 2 Resumen de los comandos usados:
 
 ### Creación de ruta estática
@@ -346,7 +346,7 @@ utilizando PnetLab. Como resultado, se concluye que PnetLab es una herramienta �
 ip 142.168.0.4/24 192.168.0.1
 save
 ```
-
+[regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
 ### 2. VPC12
 
 ```C
@@ -390,7 +390,7 @@ end
 
 do write
 ```
-
+[regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
 ### 5. R2
 
 ```java
@@ -434,6 +434,7 @@ ip route 142.168.2.0 255.255.255.0 142.168.1.2
 end
 do write
 ```
+[regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
 ### 6. R3
 
 ```java
@@ -468,7 +469,7 @@ ip route 142.168.2.0 255.255.255.0 142.168.2.2
 end
 do write
 ```
-### 7 R1
+### 7. R1
 
 ```java
 enable
@@ -502,7 +503,7 @@ ip route 142.168.0.0 255.255.255.0 142.168.1.1
 end
 do write
 ```
-
+[regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
 ### 8. R4
 
 ```java
@@ -572,7 +573,7 @@ ip route 142.168.2.0 255.255.255.0 142.178.1.1
 end
 do write
 ```
-
+[regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
 ### 10. R6
 
 ```java
