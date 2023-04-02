@@ -316,6 +316,19 @@ interface e0/1
 ip address 142.168.0.2 255.255.255.0
 no shutdown
 
+!usamos la version 2 de HSRP
+standby version 2
+
+!definimos su id de grupo HSRP y la dirección ip virtual del gateway
+standby 21 ip 10.0.0.1
+
+!también le definimos su prioridad
+standby 21 priority 109
+
+!configuramos el preempt, que sirve para que recupere la prioridad una se recupere la comunicación
+standby 21 preempt
+
+
 !configuramos las rutas estáticas
 ip route 10.0.0.0 255.255.255.252 142.168.1.2
 
@@ -345,6 +358,11 @@ no shutdown
 interface e0/1
 ip address 142.168.0.3 255.255.255.0
 no shutdown
+
+
+standby version 2
+standby 21 ip 10.0.0.1
+
 
 !configuramos las rutas estáticas
 ip route 10.0.0.0 255.255.255.252 142.168.2.2
@@ -407,7 +425,7 @@ interface e0/1
 ip address 142.178.2.1 255.255.255.0
 no shutdown
 
-!Configuracion de s1/0
+!Configuracion de s1/0 Serial
 
 
 !configuramos las rutas estáticas
