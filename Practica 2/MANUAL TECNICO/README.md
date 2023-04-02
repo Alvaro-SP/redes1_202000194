@@ -8,18 +8,16 @@
 
 ---
 
----
 
----
-
----
 
 ---
 
 ---
 
 <div align="center">
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=35&pause=1000&color=2BF715&width=435&lines=PRACTICA+%232" alt="Typing SVG" /></a>
+
+<a href="https://git.io/typing-svg" ><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=35&pause=1000&color=2BF715&width=435&lines=PRACTICA+%232" alt="Typing SVG" /></a>
+
 </div>
 
 ---
@@ -29,14 +27,13 @@
 ---
 
 ---
+<div align="center">
 
 | Nombre                      |  Carnet   |
 | --------------------------- | :-------: |
 | Alvaro Emmanuel Socop Pérez | 202000194 |
 
----
-
----
+</div>
 
 ---
 
@@ -76,7 +73,7 @@ La interconexión de diferentes ubicaciones es una necesidad en cualquier organi
 # 1 Configuraciónes de: routers, switches y VPCs
 
 ## R1
-
+ir a la configuracion de [R1](#7-R1)
 ## R2
 
 ## R5
@@ -471,7 +468,7 @@ ip route 142.168.2.0 255.255.255.0 142.168.2.2
 end
 do write
 ```
-### 7. R1
+### 7 R1
 
 ```java
 enable
