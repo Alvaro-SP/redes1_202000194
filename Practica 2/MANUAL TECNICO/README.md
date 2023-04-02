@@ -320,7 +320,7 @@ no shutdown
 standby version 2
 
 !definimos su id de grupo HSRP y la dirección ip virtual del gateway
-standby 21 ip 10.0.0.1
+standby 21 ip  142.168.0.1
 
 !también le definimos su prioridad
 standby 21 priority 109
@@ -361,7 +361,7 @@ no shutdown
 
 
 standby version 2
-standby 21 ip 10.0.0.1
+standby 21 ip 142.168.0.1
 
 
 !configuramos las rutas estáticas
@@ -457,6 +457,13 @@ interface e0/1
 ip address 142.178.0.2 255.255.255.0
 no shutdown
 
+! CONFIGURACION DE GLBP
+glbp 7 ip 142.178.0.1
+glbp 7 preempt
+glbp 7 priority 150
+glbp 7 load-balancing round-robin
+
+
 !configuramos las rutas estáticas
 ip route 10.0.0.0 255.255.255.252 142.178.1.1
 
@@ -485,6 +492,11 @@ no shutdown
 interface e0/1
 ip address 142.178.0.3 255.255.255.0
 no shutdown
+
+
+glbp 7 ip 142.178.0.1
+glbp 7 load-balancing round-robin
+
 
 !configuramos las rutas estáticas
 ip route 10.0.0.0 255.255.255.252 142.178.2.1
