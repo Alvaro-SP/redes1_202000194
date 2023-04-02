@@ -443,7 +443,7 @@ ip address 142.178.1.1 255.255.255.248
 no shutdown
 
 interface e0/1
-ip address 142.178.2.1 255.255.255.0
+ip address 142.178.2.1 255.255.255.248
 no shutdown
 
 !configuracion interfaz serial****************************
