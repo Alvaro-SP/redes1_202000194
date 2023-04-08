@@ -157,14 +157,15 @@ glbp 7 load-balancing round-robin
 ###  VPC11
 
 ```C
-ip 142.168.0.4/24 192.168.0.1
+ip 142.168.0.4/24 142.168.0.1
 save
 ```
 
 ###  VPC12
 
 ```C
-ip 192.178.0.4/24 192.168.0.1
+ip 142.178.0.4/24 142.178.0.1
+
 save
 ```
 
@@ -343,14 +344,14 @@ utilizando PnetLab. Como resultado, se concluye que PnetLab es una herramienta �
 ### 1. VPC11
 
 ```C
-ip 142.168.0.4/24 192.168.0.1
+ip 142.168.0.4/24 142.168.0.1
 save
 ```
 [regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
 ### 2. VPC12
 
 ```C
-ip 192.178.0.4/24 192.168.0.1
+ip 142.178.0.4 142.178.0.1
 save
 ```
 ## PORT CHANNEL
@@ -360,7 +361,7 @@ save
 ```java
 enable
 configure terminal
-host SW8-
+host SW8
 
 !  --------- Configuracion
 
@@ -370,7 +371,6 @@ description conexion a SW7
 interface range e0/0-1
 channel-group 1 mode desirable
 no shutdown
-end
 do write
 ```
 
@@ -386,7 +386,7 @@ host SW7
 interface range e0/2-3
 channel-group 1 mode auto
 no shutdown
-end
+
 
 do write
 ```
@@ -420,7 +420,7 @@ standby 21 priority 109
 !configuramos el preempt, que sirve para que recupere la prioridad una se recupere la comunicación
 standby 21 preempt
 
-
+exit
 !configuramos las rutas estáticas
 ip route 10.0.0.0 255.255.255.252 142.168.1.2
 
@@ -431,7 +431,6 @@ ip route 142.178.0.0 255.255.255.0 142.168.1.2
 ip route 142.168.1.0 255.255.255.248 142.168.1.2
 ip route 142.168.2.0 255.255.255.248 142.168.1.2
 
-end
 do write
 ```
 [regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
@@ -456,7 +455,7 @@ no shutdown
 standby version 2
 standby 21 ip 142.168.0.1
 
-
+exit
 !configuramos las rutas estáticas
 ip route 10.0.0.0 255.255.255.252 142.168.2.2
 
@@ -466,7 +465,7 @@ ip route 142.178.0.0 255.255.255.0 142.168.2.2
 
 ip route 142.168.1.0 255.255.255.248 142.168.2.2
 ip route 142.168.2.0 255.255.255.248 142.168.2.2
-end
+
 do write
 ```
 ### 7. R1
@@ -489,18 +488,16 @@ no shutdown
 interface s1/0
 ip address 10.0.0.1 255.255.255.252
 no shutdown
-
-!configuramos las rutas estáticas
+exit
+!configuramos las rutas estaticas
 ip route 10.0.0.0 255.255.255.252 10.0.0.2
-
 ip route 142.178.1.0 255.255.255.248 10.0.0.2
 ip route 142.178.2.0 255.255.255.248 10.0.0.2
 ip route 142.178.0.0 255.255.255.0 10.0.0.2
-
 ip route 142.168.1.0 255.255.255.248 142.168.1.1
 ip route 142.168.2.0 255.255.255.248 142.168.2.1
 ip route 142.168.0.0 255.255.255.0 142.168.1.1
-end
+
 do write
 ```
 [regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
@@ -524,7 +521,7 @@ no shutdown
 interface s1/0
 ip address 10.0.0.2 255.255.255.252
 no shutdown
-
+exit
 !configuramos las rutas estáticas
 ip route 10.0.0.0 255.255.255.252 10.0.0.1
 
@@ -535,7 +532,7 @@ ip route 142.178.0.0 255.255.255.0 142.178.1.2
 ip route 142.168.1.0 255.255.255.248 10.0.0.1
 ip route 142.168.2.0 255.255.255.248 10.0.0.1
 ip route 142.168.0.0 255.255.255.0 10.0.0.1
-end
+
 do write
 ```
 ### 9. R5
@@ -560,7 +557,7 @@ glbp 7 preempt
 glbp 7 priority 150
 glbp 7 load-balancing round-robin
 
-
+exit
 !configuramos las rutas estáticas
 ip route 10.0.0.0 255.255.255.252 142.178.1.1
 
@@ -570,7 +567,7 @@ ip route 142.178.2.0 255.255.255.248 142.178.1.1
 ip route 142.168.0.0 255.255.255.0 142.178.1.1
 ip route 142.168.1.0 255.255.255.248 142.178.1.1
 ip route 142.168.2.0 255.255.255.248 142.178.1.1
-end
+
 do write
 ```
 [regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
@@ -594,7 +591,7 @@ no shutdown
 glbp 7 ip 142.178.0.1
 glbp 7 load-balancing round-robin
 
-
+exit
 !configuramos las rutas estáticas
 ip route 10.0.0.0 255.255.255.252 142.178.2.1
 
@@ -604,7 +601,7 @@ ip route 142.178.2.0 255.255.255.248 142.178.2.1
 ip route 142.168.0.0 255.255.255.0 142.178.2.1
 ip route 142.168.1.0 255.255.255.248 142.178.2.1
 ip route 142.168.2.0 255.255.255.248 142.178.2.1
-end
+
 do write
 ```
 
@@ -622,7 +619,6 @@ description conexion a SW10 con LACP
 exit
 interface range e0/2-3
 channel-group 2 mode active
-end
 
 do write
 ```
@@ -632,16 +628,12 @@ do write
 enable
 configure terminal
 host SW10
-
 !  --------- Configuracion
-
 interface Port-channel 2
 description conexion a SW9 con LACP
 exit
-interface range e0/1-0
+interface range e0/0-1
 channel-group 2 mode passive
-end
-
 do write
 ```
 
