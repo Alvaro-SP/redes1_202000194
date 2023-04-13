@@ -86,8 +86,30 @@ La interconexión de diferentes ubicaciones es una necesidad en cualquier organi
 
 ### Creación de ruta estática
 
+Basicamente lo que se hace es tomar todas las rutas a las que puede llegar los paquetes y usar :
+
+```ip route [destino] [mascara] [salida]```
+
+lo cual permite que los paquetes que lleguen a la red destino puedan ser enviados a la salida que se le indique.
+
+```
+!configuramos las rutas estáticas para los paquetes que lleguen a la red destino
+
+ip route 10.0.0.0 255.255.255.252 142.168.2.2
+
+ip route 142.178.1.0 255.255.255.248 142.168.2.2
+ip route 142.178.2.0 255.255.255.248 142.168.2.2
+ip route 142.178.0.0 255.255.255.0 142.168.2.2
+
+ip route 142.168.1.0 255.255.255.248 142.168.2.2
+ip route 142.168.2.0 255.255.255.248 142.168.2.2
+```
+
 ### creación de PortChannel con PAGP y LACP
 - PAGP:
+
+para esta configuracion un switch esta en modo automatico y el otro en modo desirable, y se usa el canal de grupo 1 para la comunicacion.
+
 ```
 !  --------- Configuracion
 
@@ -104,6 +126,8 @@ channel-group 1 mode auto
 no shutdown
 ```
 - LACP:
+
+basicamente para esta configuracion se elige un switch en modo activo y el otro en modo pasivo y se usa el canal de grupo 2 para la comunicacion.
 ```
 interface Port-channel 2
 description conexion a SW10 con LACP
@@ -121,6 +145,9 @@ channel-group 2 mode passive
 ```
 ### creación de IP virtual con HSRP y GLBP
 - HSRP:
+
+HSRP permite a un grupo de routers compartir la misma dirección IP virtual como puerta de enlace predeterminada para los dispositivos en la red, proporcionando redundancia y aumentando la disponibilidad de la red. Los routers en el grupo HSRP se comunican entre sí para determinar el router activo, que es responsable de reenviar el tráfico de red hacia la dirección IP virtual. Si el router activo falla, uno de los routers en espera del grupo HSRP asume el papel de router activo automáticamente.
+
 ```
 
 !usamos la version 2 de HSRP
@@ -141,6 +168,9 @@ standby 21 ip 142.168.0.1
 ```
 
 - GLBP:
+
+Al igual que HSRP, GLBP permite a un grupo de routers compartir la misma dirección IP virtual como puerta de enlace predeterminada para los dispositivos en la red, proporcionando redundancia y aumentando la disponibilidad de la red.
+
 ```
 ! CONFIGURACION DE GLBP
 glbp 7 ip 142.178.0.1
@@ -338,6 +368,8 @@ Después de realizar la simulación de la topología de red para la Academia Té
 utilizando PnetLab. Como resultado, se concluye que PnetLab es una herramienta útil para la configuración y prueba de redes de área local.
 
 ## Anexos
+![Captura de pantalla principal](resources/dash2.png)
+
 
 ### CONFIGURACIONES DE LOS HOSTS
 
