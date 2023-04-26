@@ -25,6 +25,7 @@
 ---
 
 ---
+
 <div align="center">
 
 | Nombre                      |  Carnet   |
@@ -39,9 +40,10 @@
 
 ---
 
-
 # <a name="nothing"></a>MANUAL TECNICO
+
 > “Programa desarrollado en PNETLAB.”
+
 ## <a name="intro" ></a>ÍNDICE
 
 | Topico                            | Link          |
@@ -61,11 +63,9 @@ Para la red de la sede de Jutiapa, deberemos asignar direcciones de red usando V
 
 Por otro lado, en el Core de la red se utilizará FLSM para la asignación de direcciones de red y se empleará el protocolo de enrutamiento estático para la comunicación entre dispositivos.
 
-
 # 1. Resumen de direcciones IP y VLAN
 
 - donde se justifique la elección de máscara de subred empleada para los distintos requerimientos.
-
 
 # 2. Capturas de la implementación de las topologías.
 
@@ -90,22 +90,32 @@ Por otro lado, en el Core de la red se utilizará FLSM para la asignación de di
 # 1 Configuraciónes de: routers, switches y VPCs
 
 ## R1
+
 [ir a la configuracion de R1](#7-R1)
+
 ## R2
+
 [ir a la configuracion de R2](#5-R2)
+
 ## R5
+
 [ir a la configuracion de R5](#9-R5)
+
 ## SW7
+
 [ir a la configuracion de SW7](#4-SW7)
+
 ## VPC11
+
 [ir a la configuracion de VPC11](#1-VPC11)
+
 # 2 Resumen de los comandos usados:
 
 ### Creación de ruta estática
 
 Basicamente lo que se hace es tomar todas las rutas a las que puede llegar los paquetes y usar :
 
-```ip route [destino] [mascara] [salida]```
+`ip route [destino] [mascara] [salida]`
 
 lo cual permite que los paquetes que lleguen a la red destino puedan ser enviados a la salida que se le indique.
 
@@ -123,6 +133,7 @@ ip route 142.168.2.0 255.255.255.248 142.168.2.2
 ```
 
 ### creación de PortChannel con PAGP y LACP
+
 - PAGP:
 
 para esta configuracion un switch esta en modo automatico y el otro en modo desirable, y se usa el canal de grupo 1 para la comunicacion.
@@ -137,14 +148,17 @@ interface range e0/0-1
 channel-group 1 mode desirable
 no shutdown
 ```
+
 ```
 interface range e0/2-3
 channel-group 1 mode auto
 no shutdown
 ```
+
 - LACP:
 
 basicamente para esta configuracion se elige un switch en modo activo y el otro en modo pasivo y se usa el canal de grupo 2 para la comunicacion.
+
 ```
 interface Port-channel 2
 description conexion a SW10 con LACP
@@ -153,6 +167,7 @@ interface range e0/2-3
 channel-group 2 mode active
 end
 ```
+
 ```
 interface Port-channel 2
 description conexion a SW9 con LACP
@@ -160,7 +175,9 @@ exit
 interface range e0/1-0
 channel-group 2 mode passive
 ```
+
 ### creación de IP virtual con HSRP y GLBP
+
 - HSRP:
 
 HSRP permite a un grupo de routers compartir la misma dirección IP virtual como puerta de enlace predeterminada para los dispositivos en la red, proporcionando redundancia y aumentando la disponibilidad de la red. Los routers en el grupo HSRP se comunican entre sí para determinar el router activo, que es responsable de reenviar el tráfico de red hacia la dirección IP virtual. Si el router activo falla, uno de los routers en espera del grupo HSRP asume el papel de router activo automáticamente.
@@ -179,6 +196,7 @@ standby 21 priority 109
 !configuramos el preempt, que sirve para que recupere la prioridad una se recupere la comunicación
 standby 21 preempt
 ```
+
 ```
 standby version 2
 standby 21 ip 142.168.0.1
@@ -196,20 +214,25 @@ glbp 7 priority 150
 glbp 7 load-balancing round-robin
 
 ```
+
 ```
 glbp 7 ip 142.178.0.1
 glbp 7 load-balancing round-robin
 ```
 
 # 3 Comandos empleados para la verificación .
+
 correcto funcionamiento de los protocolos empleados para la realización de la práctica.
 
 - Verificando la configuración de LACP SW9 y SW10
+
 ```
 show etherchannel summary
 show lacp neighbor
 ```
+
 - Verificando la configuración de PAGP SW7 y SW8
+
 ```
 show etherchannel summary
 show pagp neighbor
@@ -244,11 +267,15 @@ utilizando PnetLab. Como resultado, se concluye que PnetLab es una herramienta �
 
 # Anexos
 
-
 ### CONFIGURACIONES DE LOS HOSTS
 
 ## SEDE CENTRAL
+
 ### 1. C1
+
+```bash
+
+```
 
 ### 2. C2
 
@@ -264,18 +291,16 @@ utilizando PnetLab. Como resultado, se concluye que PnetLab es una herramienta �
 
 ### 8. VPC21
 
-
-
 ## CORE
+
 ### 9. CENTRAL
 
 ### 10. ESCUINTLA
 
 ### 11. JUTIAPA
 
-
-
 ## SEDE JUTIAPA
+
 ### 12. J1
 
 ### 13. J2
@@ -298,22 +323,22 @@ utilizando PnetLab. Como resultado, se concluye que PnetLab es una herramienta �
 
 ### 22. VPC15
 
-
-
-
 ### 1. VPC11
 
 ```C
 ip 142.168.0.4/24 142.168.0.1
 save
 ```
+
 [regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
+
 ### 2. VPC12
 
 ```C
 ip 142.178.0.4 142.178.0.1
 save
 ```
+
 ## PORT CHANNEL
 
 ### 3. SW8
@@ -350,7 +375,9 @@ no shutdown
 
 do write
 ```
+
 [regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
+
 ### 5. R2
 
 ```bash
@@ -393,7 +420,9 @@ ip route 142.168.2.0 255.255.255.248 142.168.1.2
 
 do write
 ```
+
 [regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
+
 ### 6. R3
 
 ```bash
@@ -428,6 +457,7 @@ ip route 142.168.2.0 255.255.255.248 142.168.2.2
 
 do write
 ```
+
 ### 7. R1
 
 ```bash
@@ -460,7 +490,9 @@ ip route 142.168.0.0 255.255.255.0 142.168.1.1
 
 do write
 ```
+
 [regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
+
 ### 8. R4
 
 ```bash
@@ -495,6 +527,7 @@ ip route 142.168.0.0 255.255.255.0 10.0.0.1
 
 do write
 ```
+
 ### 9. R5
 
 ```bash
@@ -530,7 +563,9 @@ ip route 142.168.2.0 255.255.255.248 142.178.1.1
 
 do write
 ```
+
 [regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
+
 ### 10. R6
 
 ```bash
@@ -582,6 +617,7 @@ channel-group 2 mode active
 
 do write
 ```
+
 ### 13. SW10
 
 ```bash
@@ -596,8 +632,3 @@ interface range e0/0-1
 channel-group 2 mode passive
 do write
 ```
-
-
-
-
-
