@@ -274,22 +274,169 @@ utilizando PnetLab. Como resultado, se concluye que PnetLab es una herramienta �
 ### 1. C1
 
 ```bash
+enable
+configure terminal
+host C1
 
+!configuramos el enlace hacia SW4
+interface e0/0
+ip address 192.177.94.1 255.255.255.0
+no shutdown
+
+!SERIAL
+interface s1/0
+ip address 12.0.0.2 255.255.255.252
+no shutdown
+
+exit
+!configuramos las rutas estáticas
+ip route 10.0.0.0 255.255.255.252 142.168.1.2
+
+ip route 142.178.1.0 255.255.255.248 142.168.1.2
+ip route 142.178.2.0 255.255.255.248 142.168.1.2
+ip route 142.178.0.0 255.255.255.0 142.168.1.2
+
+ip route 142.168.1.0 255.255.255.248 142.168.1.2
+ip route 142.168.2.0 255.255.255.248 142.168.1.2
+
+do write
 ```
 
 ### 2. C2
 
+```java
+enable
+configure terminal
+host J2
+
+!configuramos el primer enlace entre SW5
+interface e0/0
+ip address 192.177.94.2 255.255.255.0
+no shutdown
+
+!SERIAL
+interface s1/0
+ip address 12.0.0.6 255.255.255.252
+no shutdown
+
+exit
+!configuramos las rutas estáticas
+ip route 10.0.0.0 255.255.255.252 142.168.2.2
+
+ip route 142.178.1.0 255.255.255.248 142.168.2.2
+ip route 142.178.2.0 255.255.255.248 142.168.2.2
+ip route 142.178.0.0 255.255.255.0 142.168.2.2
+
+ip route 142.168.1.0 255.255.255.248 142.168.2.2
+ip route 142.168.2.0 255.255.255.248 142.168.2.2
+
+do write
+```
+
 ### 3. C3
+
+````bash
+```java
+enable
+configure terminal
+host C3
+
+!configuramos el primer enlace entre C1 y C2
+interface e0/1
+ip address 192.177.94.4 255.255.255.0
+no shutdown
+
+interface Ethernet 0/0
+no shutdown
+
+interface Ethernet 0/0.14
+encapsulation dot1q 14
+ip address 192.178.94.97 255.255.255.240
+
+interface Ethernet 0/0.24
+encapsulation dot1q 24
+ip address 192.178.94.113 255.255.255.240
+
+interface Ethernet 0/0.34
+encapsulation dot1q 34
+ip address 192.178.94.1 255.255.255.192
+
+interface Ethernet 0/0.44
+encapsulation dot1q 44
+ip address 192.178.94.65 255.255.255.224
+
+exit
+!configuramos las rutas estáticas
+ip route 10.0.0.0 255.255.255.252 142.168.2.2
+
+ip route 142.178.1.0 255.255.255.248 142.168.2.2
+ip route 142.178.2.0 255.255.255.248 142.168.2.2
+ip route 142.178.0.0 255.255.255.0 142.168.2.2
+
+ip route 142.168.1.0 255.255.255.248 142.168.2.2
+ip route 142.168.2.0 255.255.255.248 142.168.2.2
+
+do write
+````
 
 ### 4. SW
 
-### 5. VPC22
+```bash
+enable
+configure terminal
+host SW9
 
-### 6. VPC19
+!  --------- Configuracion de VTP CLIENTE
+vtp mode client
+vtp domain 202000194
+vtp password usac
+!  --------- Configuracion de MODO ACCESO (VLANS)
+interface ethernet 1/0
+switchport mode acces
+switchport acces vlan 14
 
-### 7. VPC20
+interface ethernet 0/3
+switchport mode acces
+switchport acces vlan 24
 
-### 8. VPC21
+interface ethernet 0/2
+switchport mode acces
+switchport acces vlan 34
+
+interface ethernet 0/2
+switchport mode acces
+switchport acces vlan 44
+
+do write
+```
+
+### 5. VPC22 CONTA
+
+```bash
+ip 192.178.94.113/28 192.178.94.1
+save
+```
+
+### 6. VPC19 VENTA
+
+```bash
+ip 192.178.94.2/26 192.178.94.1
+save
+```
+
+### 7. VPC20 INFORMATICA
+
+```bash
+ip 192.178.94.66/27 192.178.94.1
+save
+```
+
+### 8. VPC21 RRHH
+
+```bash
+ip 192.178.94.98/28 192.178.94.1
+save
+```
 
 ## CORE
 
@@ -303,103 +450,26 @@ utilizando PnetLab. Como resultado, se concluye que PnetLab es una herramienta �
 
 ### 12. J1
 
-### 13. J2
-
-### 14. ESW1
-
-### 15. SW2
-
-### 16. SW3
-
-### 17. VPC14
-
-### 18. VPC8
-
-### 19. VPC6
-
-### 20. VPC7
-
-### 21. VPC5
-
-### 22. VPC15
-
-### 1. VPC11
-
-```C
-ip 142.168.0.4/24 142.168.0.1
-save
-```
-
-[regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
-
-### 2. VPC12
-
-```C
-ip 142.178.0.4 142.178.0.1
-save
-```
-
-## PORT CHANNEL
-
-### 3. SW8
-
-```bash
+```java
 enable
 configure terminal
-host SW8
+host J1
 
-!  --------- Configuracion
-
-interface Port-channel 1
-description conexion a SW7
-
-interface range e0/0-1
-channel-group 1 mode desirable
-no shutdown
-do write
-```
-
-### 4. SW7
-
-```bash
-enable
-configure terminal
-host SW7
-
-!  --------- Configuracion
-
-interface range e0/2-3
-channel-group 1 mode auto
-no shutdown
-
-
-do write
-```
-
-[regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
-
-### 5. R2
-
-```bash
-enable
-configure terminal
-host R2
-
-!configuramos el primer enlace entre routers
+!configuramos el primer enlace entre SW5 y J1
 interface e0/0
-ip address 142.168.1.1 255.255.255.248
+ip address 192.167.94.2 255.255.255.0
 no shutdown
 
-!configuramos la primera interfaz
-interface e0/1
-ip address 142.168.0.2 255.255.255.0
+! ---------SERIAL
+interface s1/0
+ip address 11.0.0.6 255.255.255.252
 no shutdown
 
-!usamos la version 2 de HSRP
+! ---------HSRP usamos la version 2 de
 standby version 2
 
 !definimos su id de grupo HSRP y la dirección ip virtual del gateway
-standby 21 ip  142.168.0.1
+standby 21 ip  192.167.94.1
 
 !también le definimos su prioridad
 standby 21 priority 109
@@ -421,28 +491,26 @@ ip route 142.168.2.0 255.255.255.248 142.168.1.2
 do write
 ```
 
-[regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
+### 13. J2
 
-### 6. R3
-
-```bash
+```java
 enable
 configure terminal
-host R3
+host J2
 
-!configuramos el primer enlace entre routers
+!configuramos el primer enlace entre SW5
 interface e0/0
-ip address 142.168.2.1 255.255.255.248
+ip address 192.167.94.3 255.255.255.0
 no shutdown
 
-!configuramos la primera interfaz
-interface e0/1
-ip address 142.168.0.3 255.255.255.0
+!SERIAL
+interface s1/1
+ip address 11.0.0.2 255.255.255.252
 no shutdown
 
 
 standby version 2
-standby 21 ip 142.168.0.1
+standby 21 ip 192.167.94.1
 
 exit
 !configuramos las rutas estáticas
@@ -458,99 +526,61 @@ ip route 142.168.2.0 255.255.255.248 142.168.2.2
 do write
 ```
 
-### 7. R1
+### 14. ESW1
 
 ```bash
 enable
 configure terminal
-host R1
+host ESW1
+! --------- Configuracion de VLAN porque es VTP RAIZ
+vlan 14
+name RRHH
+vlan 24
+name CONTA
+vlan 34
+name VENTAS
+vlan 44
+name INFORMATICA
 
-!configuramos ROUTERS
-interface e0/0
-ip address 142.168.1.2 255.255.255.248
+!  --------- Configuracion de IP
+!interface range e0/0-1
+!switchport trunk encapsulation dot1q
+!switchport mode trunk
+
+interface e0/2
+no switchport
+ip address 192.167.94.4 255.255.255.0
 no shutdown
 
-interface e0/1
-ip address 142.168.2.2 255.255.255.248
+! --------- Configuramos interfaces virtuales para puerta de cada VLAN
+interface vlan 14
+ip address 192.168.1.1 255.255.255.0
 no shutdown
 
-!configuracion interfaz serial
-interface s1/0
-ip address 10.0.0.1 255.255.255.252
+interface vlan 24
+ip address 192.168.2.1 255.255.255.0
 no shutdown
-exit
-!configuramos las rutas estaticas
-ip route 10.0.0.0 255.255.255.252 10.0.0.2
-ip route 142.178.1.0 255.255.255.248 10.0.0.2
-ip route 142.178.2.0 255.255.255.248 10.0.0.2
-ip route 142.178.0.0 255.255.255.0 10.0.0.2
-ip route 142.168.1.0 255.255.255.248 142.168.1.1
-ip route 142.168.2.0 255.255.255.248 142.168.2.1
-ip route 142.168.0.0 255.255.255.0 142.168.1.1
 
-do write
-```
+interface vlan 34
+ip address 192.168.2.1 255.255.255.0
+no shutdown
 
-[regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
+interface vlan 44
+ip address 192.168.2.1 255.255.255.0
+no shutdown
 
-### 8. R4
-
-```bash
-enable
 configure terminal
-host R4
-
-!configuramos ROUTERS
-interface e0/0
-ip address 142.178.1.1 255.255.255.248
-no shutdown
-
-interface e0/1
-ip address 142.178.2.1 255.255.255.248
-no shutdown
-
-!configuracion interfaz serial****************************
-interface s1/0
-ip address 10.0.0.2 255.255.255.252
-no shutdown
 exit
-!configuramos las rutas estáticas
-ip route 10.0.0.0 255.255.255.252 10.0.0.1
+!  --------- Configuracion de VTP SERVER
+vtp version 2
+vtp mode server
+vtp domain 202000194
+vtp password usac
 
-ip route 142.178.1.0 255.255.255.248 142.178.1.2
-ip route 142.178.2.0 255.255.255.248 142.178.2.2
-ip route 142.178.0.0 255.255.255.0 142.178.1.2
-
-ip route 142.168.1.0 255.255.255.248 10.0.0.1
-ip route 142.168.2.0 255.255.255.248 10.0.0.1
-ip route 142.168.0.0 255.255.255.0 10.0.0.1
-
-do write
-```
-
-### 9. R5
-
-```bash
-enable
-configure terminal
-host R5
-
-!configuramos ROUTERS
-interface e0/0
-ip address 142.178.1.2 255.255.255.248
-no shutdown
-
-interface e0/1
-ip address 142.178.0.2 255.255.255.0
-no shutdown
-
-! CONFIGURACION DE GLBP
-glbp 7 ip 142.178.0.1
-glbp 7 preempt
-glbp 7 priority 150
-glbp 7 load-balancing round-robin
-
+!  --------- Configuracion de STP SWITCH RAIZ RPVST
+spanning-tree mode rapid-pvst
 exit
+
 !configuramos las rutas estáticas
 ip route 10.0.0.0 255.255.255.252 142.178.1.1
 
@@ -564,71 +594,120 @@ ip route 142.168.2.0 255.255.255.248 142.178.1.1
 do write
 ```
 
-[regresar](#1-configuraciónes-de-routers-switches-y-vpcs)
-
-### 10. R6
+### 15. SW2
 
 ```bash
 enable
 configure terminal
-host R6
+host SW2
 
-!configuramos ROUTERS
-interface e0/0
-ip address 142.178.2.2 255.255.255.248
-no shutdown
+! --------- Configuracion de VTP CLIENTE
+vtp mode client
+vtp domain 202000194
+vtp password usac
 
-interface e0/1
-ip address 142.178.0.3 255.255.255.0
-no shutdown
+!  --------- Configuracion de MODO ACCESO (VLANS)
+interface ethernet 1/1
+switchport mode acces
+switchport acces vlan 14
 
+interface ethernet 0/2
+switchport mode acces
+switchport acces vlan 44
 
-glbp 7 ip 142.178.0.1
-glbp 7 load-balancing round-robin
+interface ethernet 0/3
+switchport mode acces
+switchport acces vlan 34
 
+!  --------- Configuracion DE MODO TRONCAL
+interface ethernet 0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 1/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
 exit
-!configuramos las rutas estáticas
-ip route 10.0.0.0 255.255.255.252 142.178.2.1
-
-ip route 142.178.1.0 255.255.255.248 142.178.2.1
-ip route 142.178.2.0 255.255.255.248 142.178.2.1
-
-ip route 142.168.0.0 255.255.255.0 142.178.2.1
-ip route 142.168.1.0 255.255.255.248 142.178.2.1
-ip route 142.168.2.0 255.255.255.248 142.178.2.1
 
 do write
 ```
 
-### 12. SW9
+### 16. SW3
 
 ```bash
 enable
 configure terminal
-host SW9
+host SW3
 
-!  --------- Configuracion
+! --------- Configuracion de VTP CLIENTE
+vtp mode client
+vtp domain 202000194
+vtp password usac
 
-interface Port-channel 2
-description conexion a SW10 con LACP
+!  --------- Configuracion de MODO ACCESO (VLANS)
+interface ethernet 1/1
+switchport mode acces
+switchport acces vlan 14
+
+interface ethernet 0/2
+switchport mode acces
+switchport acces vlan 44
+
+interface ethernet 0/3
+switchport mode acces
+switchport acces vlan 34
+
+!  --------- Configuracion DE MODO TRONCAL
+interface ethernet 0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface ethernet 1/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
 exit
-interface range e0/2-3
-channel-group 2 mode active
 
 do write
 ```
 
-### 13. SW10
+### 17. VPC14
 
-```bash
-enable
-configure terminal
-host SW10
-!  --------- Configuracion
-interface Port-channel 2
-description conexion a SW9 con LACP
-exit
-interface range e0/0-1
-channel-group 2 mode passive
-do write
+```C
+ip 192.168.94.2/27 192.168.94.2
+save
+```
+
+### 18. VPC8
+
+```C
+ip 192.167.94.98/28 192.167.94.1
+save
+```
+
+### 19. VPC6
+
+```C
+ip 192.167.94.66/28 192.167.94.66
+save
+```
+
+### 20. VPC7
+
+```C
+ip 192.167.94.3/27 192.167.94.1
+save
+```
+
+### 21. VPC5
+
+```C
+ip 192.167.94.114/29 192.167.94.1
+save
+```
+
+### 22. VPC15
+
+```C
+ip 192.167.94.115/29 192.167.94.1
+save
 ```
