@@ -442,9 +442,109 @@ save
 
 ### 9. CENTRAL
 
+```java
+enable
+configure terminal
+host CENTRAL
+
+!configuramos SERIALES
+interface s1/0
+ip address 10.0.0.5 255.255.255.252
+no shutdown
+
+interface s1/1
+ip address 12.0.0.2 255.255.255.252
+no shutdown
+
+interface s1/2
+ip address 12.0.0.3 255.255.255.252
+no shutdown
+
+interface s1/3
+ip address 10.0.0.1 255.255.255.252
+no shutdown
+
+exit
+!configuramos las rutas estáticas
+ip route 10.0.0.0 255.255.255.252 142.168.2.2
+
+ip route 142.178.1.0 255.255.255.248 142.168.2.2
+ip route 142.178.2.0 255.255.255.248 142.168.2.2
+ip route 142.178.0.0 255.255.255.0 142.168.2.2
+
+ip route 142.168.1.0 255.255.255.248 142.168.2.2
+ip route 142.168.2.0 255.255.255.248 142.168.2.2
+
+do write
+```
+
 ### 10. ESCUINTLA
 
+```java
+enable
+configure terminal
+host ESCUINTLA
+
+!configuramos SERIALES
+interface s1/0
+ip address 10.0.0.2 255.255.255.252
+no shutdown
+
+interface s1/1
+ip address 10.0.0.9 255.255.255.252
+no shutdown
+
+exit
+!configuramos las rutas estáticas
+ip route 10.0.0.0 255.255.255.252 142.168.2.2
+
+ip route 142.178.1.0 255.255.255.248 142.168.2.2
+ip route 142.178.2.0 255.255.255.248 142.168.2.2
+ip route 142.178.0.0 255.255.255.0 142.168.2.2
+
+ip route 142.168.1.0 255.255.255.248 142.168.2.2
+ip route 142.168.2.0 255.255.255.248 142.168.2.2
+
+do write
+```
+
 ### 11. JUTIAPA
+
+```java
+enable
+configure terminal
+host JUTIAPA
+
+!configuramos SERIALES
+interface s1/0
+ip address 11.0.0.5 255.255.255.252
+no shutdown
+
+interface s1/1
+ip address 11.0.0.1 255.255.255.252
+no shutdown
+
+interface s1/2
+ip address 10.0.0.6 255.255.255.252
+no shutdown
+
+interface s1/3
+ip address 10.0.0.10 255.255.255.252
+no shutdown
+
+exit
+!configuramos las rutas estáticas
+ip route 10.0.0.0 255.255.255.252 142.168.2.2
+
+ip route 142.178.1.0 255.255.255.248 142.168.2.2
+ip route 142.178.2.0 255.255.255.248 142.168.2.2
+ip route 142.178.0.0 255.255.255.0 142.168.2.2
+
+ip route 142.168.1.0 255.255.255.248 142.168.2.2
+ip route 142.168.2.0 255.255.255.248 142.168.2.2
+
+do write
+```
 
 ## SEDE JUTIAPA
 
