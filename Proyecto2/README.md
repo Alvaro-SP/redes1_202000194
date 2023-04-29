@@ -280,104 +280,118 @@ host C1
 
 !configuramos el enlace hacia SW4
 interface e0/0
-ip address 192.177.94.1 255.255.255.0
 no shutdown
+ip address 192.177.94.1 255.255.255.0
 
 !SERIAL
 interface s1/0
-ip address 12.0.0.2 255.255.255.252
 no shutdown
+ip address 12.0.0.2 255.255.255.252
 
 exit
 !configuramos las rutas estáticas
-ip route 10.0.0.0 255.255.255.252 142.168.1.2
-
-ip route 142.178.1.0 255.255.255.248 142.168.1.2
-ip route 142.178.2.0 255.255.255.248 142.168.1.2
-ip route 142.178.0.0 255.255.255.0 142.168.1.2
-
-ip route 142.168.1.0 255.255.255.248 142.168.1.2
-ip route 142.168.2.0 255.255.255.248 142.168.1.2
-
+ip route 10.0.0.0 255.255.255.252 12.0.0.1
+ip route 10.0.0.4 255.255.255.252 12.0.0.1
+ip route 10.0.0.8 255.255.255.252 12.0.0.1
+ip route 11.0.0.0 255.255.255.252 12.0.0.1
+ip route 11.0.0.4 255.255.255.252 12.0.0.1
+ip route 12.0.0.4 255.255.255.252 12.0.0.1
+ip route 192.167.94.0 255.255.255.0 12.0.0.1
+ip route 192.168.94.0 255.255.255.0 12.0.0.1
+ip route 192.178.94.0 255.255.255.0 192.177.94.4
 do write
 ```
 
 ### 2. C2
 
-```java
+```bash
 enable
 configure terminal
 host J2
 
 !configuramos el primer enlace entre SW5
 interface e0/0
-ip address 192.177.94.2 255.255.255.0
 no shutdown
+ip address 192.177.94.2 255.255.255.0
 
 !SERIAL
 interface s1/0
-ip address 12.0.0.6 255.255.255.252
 no shutdown
+ip address 12.0.0.6 255.255.255.252
 
 exit
 !configuramos las rutas estáticas
-ip route 10.0.0.0 255.255.255.252 142.168.2.2
-
-ip route 142.178.1.0 255.255.255.248 142.168.2.2
-ip route 142.178.2.0 255.255.255.248 142.168.2.2
-ip route 142.178.0.0 255.255.255.0 142.168.2.2
-
-ip route 142.168.1.0 255.255.255.248 142.168.2.2
-ip route 142.168.2.0 255.255.255.248 142.168.2.2
+ip route 10.0.0.0 255.255.255.252 12.0.0.5
+ip route 10.0.0.4 255.255.255.252 12.0.0.5
+ip route 10.0.0.8 255.255.255.252 12.0.0.5
+ip route 11.0.0.0 255.255.255.252 12.0.0.5
+ip route 11.0.0.4 255.255.255.252 12.0.0.5
+ip route 12.0.0.0 255.255.255.252 12.0.0.5
+ip route 192.167.94.0 255.255.255.0 12.0.0.5
+ip route 192.168.94.0 255.255.255.0 12.0.0.5
+ip route 192.178.94.0 255.255.255.0 192.177.94.4
 
 do write
 ```
 
 ### 3. C3
 
-````bash
-```java
+```bash
 enable
 configure terminal
 host C3
 
 !configuramos el primer enlace entre C1 y C2
-interface e0/1
-ip address 192.177.94.4 255.255.255.0
-no shutdown
 
 interface Ethernet 0/0
 no shutdown
 
 interface Ethernet 0/0.14
+no shutdown
 encapsulation dot1q 14
 ip address 192.178.94.97 255.255.255.240
 
 interface Ethernet 0/0.24
+no shutdown
 encapsulation dot1q 24
 ip address 192.178.94.113 255.255.255.240
 
 interface Ethernet 0/0.34
+no shutdown
 encapsulation dot1q 34
 ip address 192.178.94.1 255.255.255.192
 
 interface Ethernet 0/0.44
+no shutdown
 encapsulation dot1q 44
 ip address 192.178.94.65 255.255.255.224
 
+interface e0/1
+ip address 192.177.94.4 255.255.255.0
+no shutdown
+
 exit
 !configuramos las rutas estáticas
-ip route 10.0.0.0 255.255.255.252 142.168.2.2
-
-ip route 142.178.1.0 255.255.255.248 142.168.2.2
-ip route 142.178.2.0 255.255.255.248 142.168.2.2
-ip route 142.178.0.0 255.255.255.0 142.168.2.2
-
-ip route 142.168.1.0 255.255.255.248 142.168.2.2
-ip route 142.168.2.0 255.255.255.248 142.168.2.2
-
+ip route 10.0.0.0 255.255.255.252 192.177.94.2
+ip route 10.0.0.0 255.255.255.252 192.177.94.1
+ip route 10.0.0.4 255.255.255.252 192.177.94.2
+ip route 10.0.0.4 255.255.255.252 192.177.94.1
+ip route 10.0.0.8 255.255.255.252 192.177.94.2
+ip route 10.0.0.8 255.255.255.252 192.177.94.1
+ip route 11.0.0.0 255.255.255.252 192.177.94.2
+ip route 11.0.0.0 255.255.255.252 192.177.94.1
+ip route 11.0.0.4 255.255.255.252 192.177.94.2
+ip route 11.0.0.4 255.255.255.252 192.177.94.1
+ip route 12.0.0.0 255.255.255.252 192.177.94.2
+ip route 12.0.0.0 255.255.255.252 192.177.94.1
+ip route 12.0.0.4 255.255.255.252 192.177.94.2
+ip route 12.0.0.4 255.255.255.252 192.177.94.1
+ip route 192.167.94.0 255.255.255.0 192.177.94.2
+ip route 192.167.94.0 255.255.255.0 192.177.94.1
+ip route 192.168.94.0 255.255.255.0 192.177.94.2
+ip route 192.168.94.0 255.255.255.0 192.177.94.1
 do write
-````
+```
 
 ### 4. SW
 
@@ -386,26 +400,37 @@ enable
 configure terminal
 host SW9
 
-!  --------- Configuracion de VTP CLIENTE
-vtp mode client
-vtp domain 202000194
-vtp password usac
+vlan 14
+name RRHH
+vlan 24
+name CONTA
+vlan 34
+name VENTAS
+vlan 44
+name INFORMATICA
+exit
+
+interface ethernet 0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
 !  --------- Configuracion de MODO ACCESO (VLANS)
 interface ethernet 1/0
 switchport mode acces
-switchport acces vlan 14
+switchport acces vlan 24
 
 interface ethernet 0/3
 switchport mode acces
-switchport acces vlan 24
+switchport acces vlan 44
 
 interface ethernet 0/2
 switchport mode acces
 switchport acces vlan 34
 
-interface ethernet 0/2
+interface ethernet 0/1
 switchport mode acces
-switchport acces vlan 44
+switchport acces vlan 14
+
 
 do write
 ```
@@ -413,7 +438,7 @@ do write
 ### 5. VPC22 CONTA
 
 ```bash
-ip 192.178.94.113/28 192.178.94.1
+ip 192.178.94.114/28 192.178.94.113
 save
 ```
 
@@ -427,14 +452,14 @@ save
 ### 7. VPC20 INFORMATICA
 
 ```bash
-ip 192.178.94.66/27 192.178.94.1
+ip 192.178.94.66/27 192.178.94.65
 save
 ```
 
 ### 8. VPC21 RRHH
 
 ```bash
-ip 192.178.94.98/28 192.178.94.1
+ip 192.178.94.98/28 192.178.94.97
 save
 ```
 
@@ -442,7 +467,7 @@ save
 
 ### 9. CENTRAL
 
-```java
+```bash
 enable
 configure terminal
 host CENTRAL
@@ -453,11 +478,11 @@ ip address 10.0.0.5 255.255.255.252
 no shutdown
 
 interface s1/1
-ip address 12.0.0.2 255.255.255.252
+ip address 12.0.0.1 255.255.255.252
 no shutdown
 
 interface s1/2
-ip address 12.0.0.3 255.255.255.252
+ip address 12.0.0.5 255.255.255.252
 no shutdown
 
 interface s1/3
@@ -465,22 +490,30 @@ ip address 10.0.0.1 255.255.255.252
 no shutdown
 
 exit
+
 !configuramos las rutas estáticas
-ip route 10.0.0.0 255.255.255.252 142.168.2.2
 
-ip route 142.178.1.0 255.255.255.248 142.168.2.2
-ip route 142.178.2.0 255.255.255.248 142.168.2.2
-ip route 142.178.0.0 255.255.255.0 142.168.2.2
+ip route 10.0.0.0 255.255.255.252 10.0.0.2
+ip route 10.0.0.0 255.255.255.252 10.0.0.6
+ip route 11.0.0.0 255.255.255.252 10.0.0.2
+ip route 11.0.0.0 255.255.255.252 10.0.0.6
+ip route 11.0.0.4 255.255.255.252 10.0.0.2
+ip route 11.0.0.4 255.255.255.252 10.0.0.6
+ip route 192.167.94.0 255.255.255.0 10.0.0.2
+ip route 192.167.94.0 255.255.255.0 10.0.0.6
+ip route 192.168.94.0 255.255.255.0 10.0.0.2
+ip route 192.168.94.0 255.255.255.0 10.0.0.6
 
-ip route 142.168.1.0 255.255.255.248 142.168.2.2
-ip route 142.168.2.0 255.255.255.248 142.168.2.2
-
+ip route 192.177.94.0 255.255.255.0 12.0.0.2
+ip route 192.177.94.0 255.255.255.0 12.0.0.6
+ip route 192.178.94.0 255.255.255.0 12.0.0.2
+ip route 192.178.94.0 255.255.255.0 12.0.0.6
 do write
 ```
 
 ### 10. ESCUINTLA
 
-```java
+```bash
 enable
 configure terminal
 host ESCUINTLA
@@ -496,21 +529,23 @@ no shutdown
 
 exit
 !configuramos las rutas estáticas
-ip route 10.0.0.0 255.255.255.252 142.168.2.2
 
-ip route 142.178.1.0 255.255.255.248 142.168.2.2
-ip route 142.178.2.0 255.255.255.248 142.168.2.2
-ip route 142.178.0.0 255.255.255.0 142.168.2.2
-
-ip route 142.168.1.0 255.255.255.248 142.168.2.2
-ip route 142.168.2.0 255.255.255.248 142.168.2.2
-
+ip route 10.0.0.4 255.255.255.252 10.0.0.1
+ip route 10.0.0.4 255.255.255.252 10.0.0.10
+ip route 11.0.0.0 255.255.255.252 10.0.0.10
+ip route 11.0.0.4 255.255.255.252 10.0.0.10
+ip route 12.0.0.0 255.255.255.252 10.0.0.1
+ip route 12.0.0.4 255.255.255.252 10.0.0.1
+ip route 192.167.94.0 255.255.255.0 10.0.0.10
+ip route 192.168.94.0 255.255.255.0 10.0.0.10
+ip route 192.177.94.0 255.255.255.0 10.0.0.1
+ip route 192.178.94.0 255.255.255.0 10.0.0.1
 do write
 ```
 
 ### 11. JUTIAPA
 
-```java
+```bash
 enable
 configure terminal
 host JUTIAPA
@@ -534,14 +569,22 @@ no shutdown
 
 exit
 !configuramos las rutas estáticas
-ip route 10.0.0.0 255.255.255.252 142.168.2.2
+ip route 10.0.0.8 255.255.255.252 10.0.0.9
+ip route 10.0.0.8 255.255.255.252 10.0.0.5
+ip route 12.0.0.0 255.255.255.252 10.0.0.9
+ip route 12.0.0.0 255.255.255.252 10.0.0.5
+ip route 12.0.0.4 255.255.255.252 10.0.0.9
+ip route 12.0.0.4 255.255.255.252 10.0.0.5
 
-ip route 142.178.1.0 255.255.255.248 142.168.2.2
-ip route 142.178.2.0 255.255.255.248 142.168.2.2
-ip route 142.178.0.0 255.255.255.0 142.168.2.2
+ip route 192.167.94.0 255.255.255.0 11.0.0.2
+ip route 192.167.94.0 255.255.255.0 11.0.0.6
+ip route 192.168.94.0 255.255.255.0 11.0.0.2
+ip route 192.168.94.0 255.255.255.0 11.0.0.6
 
-ip route 142.168.1.0 255.255.255.248 142.168.2.2
-ip route 142.168.2.0 255.255.255.248 142.168.2.2
+ip route 192.177.94.0 255.255.255.0 10.0.0.9
+ip route 192.177.94.0 255.255.255.0 10.0.0.5
+ip route 192.178.94.0 255.255.255.0 10.0.0.9
+ip route 192.178.94.0 255.255.255.0 10.0.0.5
 
 do write
 ```
@@ -550,19 +593,19 @@ do write
 
 ### 12. J1
 
-```java
+```bash
 enable
 configure terminal
 host J1
 
-!configuramos el primer enlace entre SW5 y J1
-interface e0/0
-ip address 192.167.94.2 255.255.255.0
-no shutdown
-
 ! ---------SERIAL
 interface s1/0
 ip address 11.0.0.6 255.255.255.252
+no shutdown
+
+!configuramos el primer enlace entre SW5 y J1
+interface e0/0
+ip address 192.167.94.2 255.255.255.0
 no shutdown
 
 ! ---------HSRP usamos la version 2 de
@@ -579,49 +622,50 @@ standby 21 preempt
 
 exit
 !configuramos las rutas estáticas
-ip route 10.0.0.0 255.255.255.252 142.168.1.2
-
-ip route 142.178.1.0 255.255.255.248 142.168.1.2
-ip route 142.178.2.0 255.255.255.248 142.168.1.2
-ip route 142.178.0.0 255.255.255.0 142.168.1.2
-
-ip route 142.168.1.0 255.255.255.248 142.168.1.2
-ip route 142.168.2.0 255.255.255.248 142.168.1.2
+ip route 10.0.0.0 255.255.255.252 11.0.0.5
+ip route 10.0.0.4 255.255.255.252 11.0.0.5
+ip route 10.0.0.8 255.255.255.252 11.0.0.5
+ip route 11.0.0.4 255.255.255.252 11.0.0.5
+ip route 12.0.0.0 255.255.255.252 11.0.0.5
+ip route 12.0.0.4 255.255.255.252 11.0.0.5
+ip route 192.168.94.0 255.255.255.0 192.167.94.4
+ip route 192.177.94.0 255.255.255.0 11.0.0.5
+ip route 192.178.94.0 255.255.255.0 11.0.0.5
 
 do write
 ```
 
 ### 13. J2
 
-```java
+```bash
 enable
 configure terminal
 host J2
-
-!configuramos el primer enlace entre SW5
-interface e0/0
-ip address 192.167.94.3 255.255.255.0
-no shutdown
 
 !SERIAL
 interface s1/1
 ip address 11.0.0.2 255.255.255.252
 no shutdown
 
+!configuramos el primer enlace entre SW5
+interface e0/0
+ip address 192.167.94.3 255.255.255.0
+no shutdown
 
 standby version 2
 standby 21 ip 192.167.94.1
 
 exit
 !configuramos las rutas estáticas
-ip route 10.0.0.0 255.255.255.252 142.168.2.2
-
-ip route 142.178.1.0 255.255.255.248 142.168.2.2
-ip route 142.178.2.0 255.255.255.248 142.168.2.2
-ip route 142.178.0.0 255.255.255.0 142.168.2.2
-
-ip route 142.168.1.0 255.255.255.248 142.168.2.2
-ip route 142.168.2.0 255.255.255.248 142.168.2.2
+ip route 10.0.0.0 255.255.255.252 11.0.0.1
+ip route 10.0.0.4 255.255.255.252 11.0.0.1
+ip route 10.0.0.8 255.255.255.252 11.0.0.1
+ip route 11.0.0.0 255.255.255.252 11.0.0.1
+ip route 12.0.0.0 255.255.255.252 11.0.0.1
+ip route 12.0.0.4 255.255.255.252 11.0.0.1
+ip route 192.168.94.0 255.255.255.0 192.167.94.4
+ip route 192.177.94.0 255.255.255.0 11.0.0.1
+ip route 192.178.94.0 255.255.255.0 11.0.0.1
 
 do write
 ```
@@ -643,33 +687,36 @@ vlan 44
 name INFORMATICA
 
 !  --------- Configuracion de IP
-!interface range e0/0-1
-!switchport trunk encapsulation dot1q
-!switchport mode trunk
+interface e0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+interface e0/1
+switchport trunk encapsulation dot1q
+switchport mode trunk
 
 interface e0/2
 no switchport
-ip address 192.167.94.4 255.255.255.0
 no shutdown
+ip address 192.167.94.4 255.255.255.0
 
 ! --------- Configuramos interfaces virtuales para puerta de cada VLAN
 interface vlan 14
-ip address 192.168.1.1 255.255.255.0
 no shutdown
+ip address 192.168.94.49 255.255.255.240
 
 interface vlan 24
-ip address 192.168.2.1 255.255.255.0
 no shutdown
+ip address 192.168.94.65 255.255.255.248
 
 interface vlan 34
-ip address 192.168.2.1 255.255.255.0
 no shutdown
+ip address 192.168.94.1 255.255.255.224
 
 interface vlan 44
-ip address 192.168.2.1 255.255.255.0
 no shutdown
+ip address 192.168.94.33 255.255.255.240
 
-configure terminal
 exit
 !  --------- Configuracion de VTP SERVER
 vtp version 2
@@ -679,18 +726,27 @@ vtp password usac
 
 !  --------- Configuracion de STP SWITCH RAIZ RPVST
 spanning-tree mode rapid-pvst
-exit
 
 !configuramos las rutas estáticas
-ip route 10.0.0.0 255.255.255.252 142.178.1.1
-
-ip route 142.178.1.0 255.255.255.248 142.178.1.1
-ip route 142.178.2.0 255.255.255.248 142.178.1.1
-
-ip route 142.168.0.0 255.255.255.0 142.178.1.1
-ip route 142.168.1.0 255.255.255.248 142.178.1.1
-ip route 142.168.2.0 255.255.255.248 142.178.1.1
-
+ip route 10.0.0.0 255.255.255.252 192.167.94.2
+ip route 10.0.0.0 255.255.255.252 192.167.94.3
+ip route 10.0.0.4 255.255.255.252 192.167.94.2
+ip route 10.0.0.4 255.255.255.252 192.167.94.3
+ip route 10.0.0.8 255.255.255.252 192.167.94.2
+ip route 10.0.0.8 255.255.255.252 192.167.94.3
+ip route 11.0.0.0 255.255.255.252 192.167.94.2
+ip route 11.0.0.0 255.255.255.252 192.167.94.3
+ip route 11.0.0.4 255.255.255.252 192.167.94.2
+ip route 11.0.0.4 255.255.255.252 192.167.94.3
+ip route 12.0.0.0 255.255.255.252 192.167.94.2
+ip route 12.0.0.0 255.255.255.252 192.167.94.3
+ip route 12.0.0.4 255.255.255.252 192.167.94.2
+ip route 12.0.0.4 255.255.255.252 192.167.94.3
+ip route 192.177.94.0 255.255.255.0 192.167.94.2
+ip route 192.177.94.0 255.255.255.0 192.167.94.3
+ip route 192.178.94.0 255.255.255.0 192.167.94.2
+ip route 192.178.94.0 255.255.255.0 192.167.94.3
+!************ VALICAR SI LA 178 NECESITA ROUTEARSE
 do write
 ```
 
@@ -707,7 +763,7 @@ vtp domain 202000194
 vtp password usac
 
 !  --------- Configuracion de MODO ACCESO (VLANS)
-interface ethernet 1/1
+interface ethernet 0/1
 switchport mode acces
 switchport acces vlan 14
 
@@ -745,17 +801,17 @@ vtp domain 202000194
 vtp password usac
 
 !  --------- Configuracion de MODO ACCESO (VLANS)
-interface ethernet 1/1
+interface ethernet 0/1
 switchport mode acces
-switchport acces vlan 14
+switchport acces vlan 34
 
 interface ethernet 0/2
 switchport mode acces
-switchport acces vlan 44
+switchport acces vlan 24
 
 interface ethernet 0/3
 switchport mode acces
-switchport acces vlan 34
+switchport acces vlan 24
 
 !  --------- Configuracion DE MODO TRONCAL
 interface ethernet 0/0
@@ -773,41 +829,41 @@ do write
 ### 17. VPC14
 
 ```C
-ip 192.168.94.2/27 192.168.94.2
-save
-```
-
-### 18. VPC8
-
-```C
-ip 192.167.94.98/28 192.167.94.1
-save
-```
-
-### 19. VPC6
-
-```C
-ip 192.167.94.66/28 192.167.94.66
+ip 192.168.94.2/27 192.168.94.1
 save
 ```
 
 ### 20. VPC7
 
 ```C
-ip 192.167.94.3/27 192.167.94.1
+ip 192.168.94.3/27 192.168.94.1
+save
+```
+
+### 19. VPC6
+
+```C
+ip 192.168.94.34/28 192.168.94.33
+save
+```
+
+### 18. VPC8
+
+```C
+ip 192.168.94.50/28 192.168.94.49
 save
 ```
 
 ### 21. VPC5
 
 ```C
-ip 192.167.94.114/29 192.167.94.1
+ip 192.168.94.66/29 192.168.94.65
 save
 ```
 
 ### 22. VPC15
 
 ```C
-ip 192.167.94.115/29 192.167.94.1
+ip 192.168.94.67/29 192.168.94.65
 save
 ```
