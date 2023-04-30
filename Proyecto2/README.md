@@ -65,7 +65,14 @@ Por otro lado, en el Core de la red se utilizará FLSM para la asignación de di
 
 # 1. Resumen de direcciones IP y VLAN
 
-- donde se justifique la elección de máscara de subred empleada para los distintos requerimientos.
+- elección de máscara de subred empleada para los distintos requerimientos.
+
+![Captura de pantalla principal](assets/0.png)
+![Captura de pantalla principal](assets/1.png)
+![Captura de pantalla principal](assets/2.png)
+![Captura de pantalla principal](assets/3.png)
+![Captura de pantalla principal](assets/4.png)
+![Captura de pantalla principal](assets/5.png)
 
 # 2. Capturas de la implementación de las topologías.
 
@@ -84,32 +91,31 @@ Por otro lado, en el Core de la red se utilizará FLSM para la asignación de di
 ## Completo
 
 ![Captura de pantalla principal](assets/DASH.png)
+![Captura de pantalla principal](assets/funka.png)
 
 # 3. Detalle de los comandos usados
 
 # 1 Configuraciónes de: routers, switches y VPCs
 
-## R1
+## J1
 
-[ir a la configuracion de R1](#7-R1)
+[ir a la configuracion de R1](#12-J1)
 
-## R2
+## ESW1
 
-[ir a la configuracion de R2](#5-R2)
+[ir a la configuracion de R2](#14-ESW1)
 
-## R5
+# 4 CAPTURAS WIRESHARK
 
-[ir a la configuracion de R5](#9-R5)
+### VLAN
 
-## SW7
+![Captura de pantalla principal](assets/wr1.png)
 
-[ir a la configuracion de SW7](#4-SW7)
+### HSRP
 
-## VPC11
+![Captura de pantalla principal](assets/wr2.png)
 
-[ir a la configuracion de VPC11](#1-VPC11)
-
-# 2 Resumen de los comandos usados:
+# 5 Resumen de los comandos usados:
 
 ### Creación de ruta estática
 
@@ -130,50 +136,6 @@ ip route 142.178.0.0 255.255.255.0 142.168.2.2
 
 ip route 142.168.1.0 255.255.255.248 142.168.2.2
 ip route 142.168.2.0 255.255.255.248 142.168.2.2
-```
-
-### creación de PortChannel con PAGP y LACP
-
-- PAGP:
-
-para esta configuracion un switch esta en modo automatico y el otro en modo desirable, y se usa el canal de grupo 1 para la comunicacion.
-
-```
-!  --------- Configuracion
-
-interface Port-channel 1
-description conexion a SW7
-
-interface range e0/0-1
-channel-group 1 mode desirable
-no shutdown
-```
-
-```
-interface range e0/2-3
-channel-group 1 mode auto
-no shutdown
-```
-
-- LACP:
-
-basicamente para esta configuracion se elige un switch en modo activo y el otro en modo pasivo y se usa el canal de grupo 2 para la comunicacion.
-
-```
-interface Port-channel 2
-description conexion a SW10 con LACP
-exit
-interface range e0/2-3
-channel-group 2 mode active
-end
-```
-
-```
-interface Port-channel 2
-description conexion a SW9 con LACP
-exit
-interface range e0/1-0
-channel-group 2 mode passive
 ```
 
 ### creación de IP virtual con HSRP y GLBP
@@ -220,34 +182,14 @@ glbp 7 ip 142.178.0.1
 glbp 7 load-balancing round-robin
 ```
 
-# 3 Comandos empleados para la verificación .
+# 6 Comandos empleados para la verificación .
 
 correcto funcionamiento de los protocolos empleados para la realización de la práctica.
-
-- Verificando la configuración de LACP SW9 y SW10
-
-```
-show etherchannel summary
-show lacp neighbor
-```
-
-- Verificando la configuración de PAGP SW7 y SW8
-
-```
-show etherchannel summary
-show pagp neighbor
-```
 
 - Verificando la configuración de HSRP SW7 y SW8
 
 ```c
 show standby brief
-```
-
-- Verificando la configuración de GLBP SW9 y SW10
-
-```c
-show glbp brief
 ```
 
 - verificando la configuración de las rutas de interfaces
